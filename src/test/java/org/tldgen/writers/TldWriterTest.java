@@ -37,7 +37,7 @@ public class TldWriterTest {
 		builder.setTldUri("http://loom.extrema-sistemas.org/loom-core.tld");
 		builder.createTLD(tldFilename);
 
-		FileReader expected = new FileReader( "src/test/resources/org/loom/tldgen/writers/expected-output.tld");
+		FileReader expected = new FileReader( "src/test/resources/org/tldgen/writers/expected-output.tld");
 		Diff myDiff = new Diff( new FileReader(tldFilename), expected);
 		assertTrue("XSL transformation worked as expected " + myDiff, myDiff.similar());
 	}

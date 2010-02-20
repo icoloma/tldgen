@@ -2,13 +2,8 @@ package org.tldgen.util;
 
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 public class DirectoryUtils {
 
-	private static final Log log = LogFactory.getLog(DirectoryUtils.class);
-	
 	/**
 	 * @param htmlFolder path of the html folder
 	 * @throws RuntimeException if error cleaning target folder
