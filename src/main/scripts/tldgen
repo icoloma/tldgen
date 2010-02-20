@@ -15,7 +15,7 @@ fi
 if [ $# -eq 0 ]
 then
 	COMMAND="$COMMAND -sourcepath . -subpackages org"
-	eval $C
+	eval $COMMAND
 	exit
 fi
 
