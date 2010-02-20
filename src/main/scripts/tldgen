@@ -20,18 +20,11 @@ then
 fi
 
 while [ $# -ge 1 ]; do
-	if [[ "$1" = "-sourcepath" ]]
+	if echo $1 | grep -Eq ^\-.*
 	then
-		SOURCES=`echo $DIRNAME/*-sources.jar`
-		COMMAND="$COMMAND $1 $2:$SOURCES"
-		shift
+		COMMAND="$COMMAND $1"
 	else
-		if echo $1 | grep -Eq ^\-.*
-		then
-			COMMAND="$COMMAND $1"
-		else
-			COMMAND="$COMMAND \"$1\""
-		fi
+		COMMAND="$COMMAND \"$1\""
 	fi
 	shift
 done
