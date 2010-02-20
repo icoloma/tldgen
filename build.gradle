@@ -1,0 +1,62 @@
+apply url: '../shared/extrema.gradle'
+
+project.version = tldgenVersion
+
+repositories {
+	flatDir name: 'jdk-home', dirs: System.properties['java.home'] + "/../lib/"
+}
+
+configurations {
+	sources.exclude module: 'tools'
+	sources.exclude group: 'net.sf.saxon', module: 'saxon'
+	sources.exclude group: 'xmlunit', module: 'xmlunit'
+}
+ 
+dependencies {
+	providedCompile	":tools",
+					":saxon:9.1.0.8",
+					"log4j:log4j:1.2.14"
+
+	compile 		"commons-io:commons-io:1.4",
+					"commons-lang:commons-lang:2.4",
+					"commons-logging:commons-logging:1.1.1"
+
+	testCompile 	"be.roam.hue:hue:1.1",
+					"junit:junit:4.5",
+					"net.sourceforge.htmlunit:htmlunit:2.5",
+					"xmlunit:xmlunit:1.2"
+
+}
+
+task jar(type: Jar, overwrite: true, dependsOn: compileJava, description: "Creates tldgen.jar") {
+	from(sourceSets.main.classesDir) {
+		include "org/loom/tldgen/annotations/**"
+	}
+}
+
+task toolsJar(type: Jar, dependsOn: compileJava, description: "Creates tldgen-tools.jar") {
+	baseName = 'tldgen-tools';
+	from sourceSets.main.classesDir
+}
+
+task zip(type: Zip, dependsOn: ['javadoc']) {
+	prefix = "${project.name}-${project.version}/"
+	into(prefix) {
+		from(libsDir)
+		from(projectDir) {
+			include 'LICENSE' 
+			include 'README'
+		}
+		from('src/main/scripts') {
+			into 'bin'
+			fileMode = 0755
+		}
+		from(docsDir) {
+			into 'docs'
+		}
+		from(configurations.runtime.resolve() + configurations.providedCompile.resolve()) {
+			into 'lib'
+			exclude 'tools.jar'
+		} 
+	}
+}

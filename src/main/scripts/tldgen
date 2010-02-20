@@ -1,0 +1,40 @@
+#!/bin/bash
+DIRNAME=$(dirname $0)
+
+DIRNAME=`echo $DIRNAME | sed -e 's/\/bin$//g'`
+CP=`echo $DIRNAME/lib/*.jar $DIRNAME/*tools*.jar | sed -e 's/ /:/g'`
+
+COMMAND="javadoc -docletpath $CP -private -doclet org.loom.tldgen.TldDoclet"
+
+if [[ $1 = "-help" || $1 = "--help" ]]
+then
+	shift
+fi
+
+
+if [ $# -eq 0 ]
+then
+	COMMAND="$COMMAND -sourcepath . -subpackages org"
+	eval $C
+	exit
+fi
+
+while [ $# -ge 1 ]; do
+	if [[ "$1" = "-sourcepath" ]]
+	then
+		SOURCES=`echo $DIRNAME/*-sources.jar`
+		COMMAND="$COMMAND $1 $2:$SOURCES"
+		shift
+	else
+		if echo $1 | grep -Eq ^\-.*
+		then
+			COMMAND="$COMMAND $1"
+		else
+			COMMAND="$COMMAND \"$1\""
+		fi
+	fi
+	shift
+done
+
+echo $COMMAND
+eval $COMMAND

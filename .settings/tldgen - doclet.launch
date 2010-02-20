@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/tldgen/src/test/genlib/tools.jar"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.sun.tools.javadoc.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-private -doclet org.loom.tldgen.TldDoclet -sourcepath src/test/java -subpackages org.loom.tldgen.tags -tldFile build/tldgen-core.tld -displayName &quot;Loom Core Tag Library&quot; -name loom -uri &quot;http://loom.extrema-sistemas.org/loom-core.tld&quot; -htmlFolder build -license APACHE"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="tldgen"/>
+</launchConfiguration>
