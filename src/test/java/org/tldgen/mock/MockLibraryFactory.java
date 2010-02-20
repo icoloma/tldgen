@@ -1,4 +1,4 @@
-package org.loom.tldgen.mock;
+package org.tldgen.mock;
 
 import org.tldgen.annotations.BodyContent;
 import org.tldgen.model.Attribute;

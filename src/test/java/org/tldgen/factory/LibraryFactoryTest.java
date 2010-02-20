@@ -1,4 +1,4 @@
-package org.loom.tldgen.factory;
+package org.tldgen.factory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

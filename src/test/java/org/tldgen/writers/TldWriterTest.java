@@ -1,16 +1,16 @@
-package org.loom.tldgen.writers;
+package org.tldgen.writers;
 
 import static org.junit.Assert.assertTrue;
-import static org.loom.tldgen.factory.LibraryFactoryTest.OUTPUT_FOLDER;
+import static org.tldgen.factory.LibraryFactoryTest.OUTPUT_FOLDER;
 
 import java.io.FileReader;
 
 import org.custommonkey.xmlunit.Diff;
 import org.junit.Before;
 import org.junit.Test;
-import org.loom.tldgen.mock.MockLibraryFactory;
 import org.tldgen.License;
 import org.tldgen.TldBuilder;
+import org.tldgen.mock.MockLibraryFactory;
 import org.tldgen.model.Library;
 
 public class TldWriterTest {

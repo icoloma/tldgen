@@ -1,4 +1,4 @@
-package org.loom.tldgen.tags;
+package org.tldgen.tags;
 
 import org.tldgen.annotations.Attribute;
 import org.tldgen.annotations.Tag;

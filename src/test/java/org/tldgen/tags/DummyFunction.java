@@ -1,4 +1,4 @@
-package org.loom.tldgen.tags;
+package org.tldgen.tags;
 
 import org.tldgen.annotations.Function;
 
@@ -15,7 +15,7 @@ public class DummyFunction {
 	}
 	
 	@Function
-	public static Integer baz(int primitive, String unqualified, org.loom.tldgen.tags.DummyFunction qualified) {
+	public static Integer baz(int primitive, String unqualified, org.tldgen.tags.DummyFunction qualified) {
 		return null;
 	}
 	

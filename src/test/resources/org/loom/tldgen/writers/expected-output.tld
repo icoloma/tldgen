@@ -22,7 +22,7 @@
         <description>tag description with &lt;testing description escape</description>
         <display-name>dummy display name</display-name>
         <name>dummy</name>
-        <tag-class>org.loom.tldgen.sample.DummyTag</tag-class>
+        <tag-class>org.tldgen.sample.DummyTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>foo</name>
@@ -34,7 +34,7 @@
         <description>description of another tag</description>
         <display-name>tag2 display name</display-name>
         <name>tag2</name>
-        <tag-class>org.loom.tldgen.sample.extension.Tag2</tag-class>
+        <tag-class>org.tldgen.sample.extension.Tag2</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <name>foo</name>
@@ -43,12 +43,12 @@
     </tag>
     <function>
         <name>function0</name>
-        <function-class>org.loom.tldgen.functions.DummyFunction</function-class>
+        <function-class>org.tldgen.functions.DummyFunction</function-class>
         <example>function0 example</example>
     </function>
     <function>
         <name>function1</name>
-        <function-class>org.loom.tldgen.targetfunctions.FunctionSampleUtil</function-class>
+        <function-class>org.tldgen.targetfunctions.FunctionSampleUtil</function-class>
         <example>function1 example</example>
     </function>
 </taglib>
