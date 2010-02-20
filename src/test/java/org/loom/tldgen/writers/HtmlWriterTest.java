@@ -11,9 +11,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
-import org.loom.tldgen.TldBuilder;
 import org.loom.tldgen.mock.MockLibraryFactory;
-import org.loom.tldgen.model.Library;
+import org.tldgen.TldBuilder;
+import org.tldgen.model.Library;
 
 import be.roam.hue.doj.Doj;
 
@@ -67,7 +67,7 @@ public class HtmlWriterTest {
 		 Doj element = pageDoj.get("div#custom-doc div#bd div#yui-main div#wrapper div#function0 table tbody tr td");
 		 Log log = LogFactory.getLog(HtmlWriterTest.class);
 		 log.debug("element = " + element.texts());
-		 assertTrue(containsValue("org.loom.tldgen.functions.DummyFunction", element.texts()));
+		 assertTrue(containsValue("org.tldgen.functions.DummyFunction", element.texts()));
 	}
 
 }

@@ -1,9 +1,9 @@
-package org.loom.tldgen.writers;
+package org.tldgen.writers;
 
 import java.io.IOException;
 
-import org.loom.tldgen.model.Function;
-import org.loom.tldgen.model.Library;
+import org.tldgen.model.Function;
+import org.tldgen.model.Library;
 
 public class HtmlFunctionWriter extends AbstractHtmlWriter {
 	

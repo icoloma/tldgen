@@ -1,4 +1,4 @@
-package org.loom.tldgen;
+package org.tldgen;
 
 import java.io.IOException;
 import java.io.InputStream;

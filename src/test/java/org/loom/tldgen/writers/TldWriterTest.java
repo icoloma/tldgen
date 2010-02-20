@@ -8,10 +8,10 @@ import java.io.FileReader;
 import org.custommonkey.xmlunit.Diff;
 import org.junit.Before;
 import org.junit.Test;
-import org.loom.tldgen.License;
-import org.loom.tldgen.TldBuilder;
 import org.loom.tldgen.mock.MockLibraryFactory;
-import org.loom.tldgen.model.Library;
+import org.tldgen.License;
+import org.tldgen.TldBuilder;
+import org.tldgen.model.Library;
 
 public class TldWriterTest {
 

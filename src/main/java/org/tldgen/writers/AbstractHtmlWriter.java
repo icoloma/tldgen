@@ -1,12 +1,12 @@
-package org.loom.tldgen.writers;
+package org.tldgen.writers;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
-import org.loom.tldgen.model.AbstractTldElement;
-import org.loom.tldgen.model.Function;
-import org.loom.tldgen.model.Library;
-import org.loom.tldgen.model.Tag;
+import org.tldgen.model.AbstractTldElement;
+import org.tldgen.model.Function;
+import org.tldgen.model.Library;
+import org.tldgen.model.Tag;
 
 /**
  * Create a single HTML file

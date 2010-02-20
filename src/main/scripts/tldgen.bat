@@ -12,7 +12,7 @@ for %%a in (%TLDGEN_HOME%\lib\*.jar) do (
 	set CP=!CP!;%%a
 )
 
-set LAUNCH=javadoc -docletpath !CP! -private -doclet org.loom.tldgen.TldDoclet
+set LAUNCH=javadoc -docletpath !CP! -private -doclet org.tldgen.TldDoclet
 
 if "%1" == "-help" goto help
 if "%1" == "--help" goto help

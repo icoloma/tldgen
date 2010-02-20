@@ -1,4 +1,4 @@
-package org.loom.tldgen.writers;
+package org.tldgen.writers;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -8,10 +8,10 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 
 import org.apache.commons.io.IOUtils;
-import org.loom.tldgen.model.Library;
-import org.loom.tldgen.model.Tag;
-import org.loom.tldgen.util.ClasspathFileUtils;
-import org.loom.tldgen.util.DirectoryUtils;
+import org.tldgen.model.Library;
+import org.tldgen.model.Tag;
+import org.tldgen.util.ClasspathFileUtils;
+import org.tldgen.util.DirectoryUtils;
 
 /**
  * Create HTML Documentation

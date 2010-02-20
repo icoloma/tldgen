@@ -1,4 +1,4 @@
-package org.loom.tldgen.model;
+package org.tldgen.model;
 
 import java.util.Set;
 import java.util.TreeSet;

@@ -8,12 +8,12 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.loom.tldgen.TldDoclet;
-import org.loom.tldgen.annotations.BodyContent;
-import org.loom.tldgen.model.Attribute;
-import org.loom.tldgen.model.Function;
-import org.loom.tldgen.model.Library;
-import org.loom.tldgen.model.Tag;
+import org.tldgen.TldDoclet;
+import org.tldgen.annotations.BodyContent;
+import org.tldgen.model.Attribute;
+import org.tldgen.model.Function;
+import org.tldgen.model.Library;
+import org.tldgen.model.Tag;
 
 import com.sun.tools.javadoc.Main;
 
@@ -32,7 +32,7 @@ public class LibraryFactoryTest {
 	public void setup() {
 		if (library == null) {
 			int result = Main.execute(new String[] {
-					"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.loom.tldgen.tags", "-tldFile", OUTPUT_FOLDER + "LibraryFactoryTest-output/tldgen-test.tld",
+					"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.tldgen.tags", "-tldFile", OUTPUT_FOLDER + "LibraryFactoryTest-output/tldgen-test.tld",
 					"-displayName", "Loom Core Tag Library", "-name", "loom", "-uri", "http://loom.extrema-sistemas.org/loom-core.tld", "-htmlFolder", OUTPUT_FOLDER + "LibraryFactoryTest-output", "-indentSpaces", "4", "-license", "APACHE"
 			});
 			assertEquals("The javadoc command did not exit successfully. Check the system log for details", 0, result);
@@ -106,7 +106,7 @@ public class LibraryFactoryTest {
 		assertNull(baz.getIcon());
 		assertNull(baz.getExample());
 		assertNull(baz.getDisplayName());
-		assertEquals("java.lang.Integer baz(int, java.lang.String, org.loom.tldgen.tags.DummyFunction)", baz.getSignature());
+		assertEquals("java.lang.Integer baz(int, java.lang.String, org.tldgen.tags.DummyFunction)", baz.getSignature());
 		
 		// check  annotated private function
 		assertNull(library.getFunction("hidden"));

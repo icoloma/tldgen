@@ -1,4 +1,4 @@
-package org.loom.tldgen;
+package org.tldgen;
 
 import java.io.PrintStream;
 import java.lang.reflect.Field;
@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.StringUtils;
-import org.loom.tldgen.factory.LibraryFactory;
-import org.loom.tldgen.model.Library;
+import org.tldgen.factory.LibraryFactory;
+import org.tldgen.model.Library;
 
 import com.sun.javadoc.RootDoc;
 

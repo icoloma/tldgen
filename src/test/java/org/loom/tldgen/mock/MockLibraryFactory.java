@@ -1,10 +1,10 @@
 package org.loom.tldgen.mock;
 
-import org.loom.tldgen.annotations.BodyContent;
-import org.loom.tldgen.model.Attribute;
-import org.loom.tldgen.model.Function;
-import org.loom.tldgen.model.Library;
-import org.loom.tldgen.model.Tag;
+import org.tldgen.annotations.BodyContent;
+import org.tldgen.model.Attribute;
+import org.tldgen.model.Function;
+import org.tldgen.model.Library;
+import org.tldgen.model.Tag;
 
 /**
  * Creates mock Library data for testing
@@ -24,7 +24,7 @@ public class MockLibraryFactory {
 		tag.setName("dummy");
 		tag.setExample("dummy example");
 		tag.setDisplayName("dummy display name");
-		tag.setClazz("org.loom.tldgen.sample.DummyTag");
+		tag.setClazz("org.tldgen.sample.DummyTag");
 		tag.setBodyContent(BodyContent.EMPTY);
 		tag.setDescription("tag description with <testing description escape");
 		Attribute attribute = new Attribute();
@@ -39,7 +39,7 @@ public class MockLibraryFactory {
 		tag.setName("tag2");
 		tag.setExample("tag2 example");
 		tag.setDisplayName("tag2 display name");
-		tag.setClazz("org.loom.tldgen.sample.extension.Tag2");
+		tag.setClazz("org.tldgen.sample.extension.Tag2");
 		tag.setBodyContent(BodyContent.SCRIPTLESS);
 		tag.setDescription("description of another tag");
 		tag.setDeprecated(true);
@@ -54,12 +54,12 @@ public class MockLibraryFactory {
 		Function function = new Function();
 		function.setName("function0");
 		function.setExample("function0 example");
-		function.setClazz("org.loom.tldgen.functions.DummyFunction");
+		function.setClazz("org.tldgen.functions.DummyFunction");
 		library.add(function);
 		function = new Function();
 		function.setName("function1");
 		function.setExample("function1 example");
-		function.setClazz("org.loom.tldgen.targetfunctions.FunctionSampleUtil");
+		function.setClazz("org.tldgen.targetfunctions.FunctionSampleUtil");
 		library.add(function);
 
 		return library;

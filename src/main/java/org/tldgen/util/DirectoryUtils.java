@@ -1,4 +1,4 @@
-package org.loom.tldgen.util;
+package org.tldgen.util;
 
 import java.io.File;
 

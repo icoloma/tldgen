@@ -1,6 +1,6 @@
 package org.loom.tldgen.tags;
 
-import org.loom.tldgen.annotations.Function;
+import org.tldgen.annotations.Function;
 
 public class DummyFunction {
 

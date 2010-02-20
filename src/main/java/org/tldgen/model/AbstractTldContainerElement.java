@@ -1,6 +1,6 @@
-package org.loom.tldgen.model;
+package org.tldgen.model;
 
-import static org.loom.tldgen.util.JavadocUtils.getStringAttribute;
+import static org.tldgen.util.JavadocUtils.getStringAttribute;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ProgramElementDoc;

@@ -1,9 +1,9 @@
-package org.loom.tldgen.model;
+package org.tldgen.model;
 
-import static org.loom.tldgen.util.JavadocUtils.getAnnotation;
-import static org.loom.tldgen.util.JavadocUtils.getBooleanAttribute;
-import static org.loom.tldgen.util.JavadocUtils.getEnumAttribute;
-import static org.loom.tldgen.util.JavadocUtils.getStringArrayAttribute;
+import static org.tldgen.util.JavadocUtils.getAnnotation;
+import static org.tldgen.util.JavadocUtils.getBooleanAttribute;
+import static org.tldgen.util.JavadocUtils.getEnumAttribute;
+import static org.tldgen.util.JavadocUtils.getStringArrayAttribute;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,8 +17,8 @@ import java.util.TreeSet;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.loom.tldgen.annotations.BodyContent;
-import org.loom.tldgen.annotations.ExcludeProperties;
+import org.tldgen.annotations.BodyContent;
+import org.tldgen.annotations.ExcludeProperties;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
@@ -72,7 +72,7 @@ public class Tag extends AbstractTldContainerElement {
 		}
 		
 		// process any @Tag annotation
-		AnnotationDesc annotation = getAnnotation(doc, org.loom.tldgen.annotations.Tag.class);
+		AnnotationDesc annotation = getAnnotation(doc, org.tldgen.annotations.Tag.class);
 		if (annotation != null) {
 			tag.postProcessElement(doc, annotation);
 		}
@@ -110,7 +110,7 @@ public class Tag extends AbstractTldContainerElement {
 	 * @return the created Attribute instance, null if none
 	 */
 	private static Attribute parseAttribute(MemberDoc doc) {
-		AnnotationDesc annotation = getAnnotation(doc, org.loom.tldgen.annotations.Attribute.class);
+		AnnotationDesc annotation = getAnnotation(doc, org.tldgen.annotations.Attribute.class);
 		if (annotation == null) {
 			return null;
 		}

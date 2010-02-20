@@ -1,7 +1,7 @@
-package org.loom.tldgen.model;
+package org.tldgen.model;
 
-import static org.loom.tldgen.util.JavadocUtils.getAnnotation;
-import static org.loom.tldgen.util.JavadocUtils.getStringAttribute;
+import static org.tldgen.util.JavadocUtils.getAnnotation;
+import static org.tldgen.util.JavadocUtils.getStringAttribute;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;

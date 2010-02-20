@@ -1,9 +1,9 @@
-package org.loom.tldgen.writers;
+package org.tldgen.writers;
 
 import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
-import org.loom.tldgen.model.Library;
+import org.tldgen.model.Library;
 
 public class HtmlIndexWriter extends AbstractHtmlWriter {
 	

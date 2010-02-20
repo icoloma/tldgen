@@ -1,4 +1,4 @@
-package org.loom.tldgen.annotations;
+package org.tldgen.annotations;
 
 /**
  * The <a href="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">body-content</a> 

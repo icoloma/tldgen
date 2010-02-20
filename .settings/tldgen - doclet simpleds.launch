@@ -7,7 +7,7 @@
 <listEntry value="1"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.sun.tools.javadoc.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-private -doclet org.loom.tldgen.TldDoclet &#13;&#10;-sourcepath src/main/java:../loom-core/src/main/java &#13;&#10;-subpackages org.loom.simpleds &#13;&#10;-displayName &quot;Loom SimpleDS Tag Library&quot; &#13;&#10;-name loom-simpleds &#13;&#10;-uri &quot;http://loom.extrema-sistemas.org/loom-simpleds.tld&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-private -doclet org.tldgen.TldDoclet &#13;&#10;-sourcepath ../loom-core/src/main/java &#13;&#10;-subpackages org.loom.simpleds &#13;&#10;-displayName &quot;Loom SimpleDS Tag Library&quot; &#13;&#10;-name loom-simpleds &#13;&#10;-uri &quot;http://loom.extrema-sistemas.org/loom-simpleds.tld&quot;"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="tldgen"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:loom-appengine}"/>
 </launchConfiguration>

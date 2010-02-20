@@ -1,4 +1,4 @@
-package org.loom.tldgen.writers;
+package org.tldgen.writers;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -11,12 +11,12 @@ import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.loom.tldgen.License;
-import org.loom.tldgen.model.Attribute;
-import org.loom.tldgen.model.Function;
-import org.loom.tldgen.model.Library;
-import org.loom.tldgen.model.Tag;
-import org.loom.tldgen.util.DirectoryUtils;
+import org.tldgen.License;
+import org.tldgen.model.Attribute;
+import org.tldgen.model.Function;
+import org.tldgen.model.Library;
+import org.tldgen.model.Tag;
+import org.tldgen.util.DirectoryUtils;
 
 /**
  * Create TLD documentation

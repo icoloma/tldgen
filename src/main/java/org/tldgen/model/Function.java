@@ -1,4 +1,4 @@
-package org.loom.tldgen.model;
+package org.tldgen.model;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.Doc;

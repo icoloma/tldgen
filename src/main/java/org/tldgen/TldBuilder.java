@@ -1,4 +1,4 @@
-package org.loom.tldgen;
+package org.tldgen;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,9 +7,9 @@ import javax.xml.stream.XMLStreamException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.loom.tldgen.model.Library;
-import org.loom.tldgen.writers.HtmlLibraryWriter;
-import org.loom.tldgen.writers.TldLibraryWriter;
+import org.tldgen.model.Library;
+import org.tldgen.writers.HtmlLibraryWriter;
+import org.tldgen.writers.TldLibraryWriter;
 
 /**
  * Creates a TLD file and related HTML documentation

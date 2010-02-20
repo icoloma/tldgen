@@ -1,8 +1,8 @@
 package org.loom.tldgen.tags;
 
-import org.loom.tldgen.annotations.Attribute;
-import org.loom.tldgen.annotations.BodyContent;
-import org.loom.tldgen.annotations.Tag;
+import org.tldgen.annotations.Attribute;
+import org.tldgen.annotations.BodyContent;
+import org.tldgen.annotations.Tag;
 
 /** Tag javadoc */
 @Tag(
