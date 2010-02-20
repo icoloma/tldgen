@@ -14,17 +14,17 @@ import java.lang.annotation.Target;
 public @interface Function {
 
 	/**
-	 * Optional icon element that can be used by tools, default none
+	 * Optional icon element to be displayed by tools
 	 */
 	String icon() default "";
 	
 	/**
-	 * Optional informal description of an example of a use of this function
+	 * Optional informal description of an example of use of this function
 	 */
 	String example() default "";
 
 	/**
-	 * A short name that is intended to be displayed by tools, default none
+	 * Optional short name to be displayed by tools
 	 */
 	String displayName() default "";
 

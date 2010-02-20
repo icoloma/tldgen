@@ -13,16 +13,16 @@ import java.lang.annotation.Target;
 @Documented
 public @interface Attribute {
 	
-	/** The name of the attribute, defaults to the attribute name */
+	/** The name of the attribute. If empty, the java attribute name will be used. */
 	String name() default "";
 
-	/** whether the attribute is required or optional, default false*/
+	/** Whether the attribute is required or optional, default false*/
 	boolean required() default false;         
 
 	/** 
 	 * Whether the attribute is a runtime attribute, default true.  
 	 * Notice that this default value is different from the one specified 
-	 * in the schema, since it is far more common. 
+	 * in the schema, since this is a far more common use case. 
 	 */
 	boolean rtexprvalue() default true;
 
