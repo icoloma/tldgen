@@ -39,7 +39,7 @@ task toolsJar(type: Jar, dependsOn: compileJava, description: "Creates tldgen-to
 	from sourceSets.main.classesDir
 }
 
-task zip(type: Zip, dependsOn: ['javadoc']) {
+task zip(type: Zip, dependsOn: [jar, sourcesJar, javadocJar, toolsJar]) {
 	prefix = "${project.name}-${project.version}/"
 	into(prefix) {
 		from(libsDir)
