@@ -5,7 +5,7 @@ set DIRNAME=%~dp0%
 
 set TLDGEN_HOME=%DIRNAME%..
 
-for %%a in (%TLDGEN_HOME%\*tools*.jar) do (
+for %%a in (%TLDGEN_HOME%\tldgen-tools-*.jar) do (
 	set CP=%%a
 )
 for %%a in (%TLDGEN_HOME%\lib\*.jar) do (
@@ -21,18 +21,7 @@ if "%1" == "" goto help
 
 :loop
 	if "%~1" == "" goto launch
-	
-	if "%~1" == "-sourcepath" (
-		for %%a in (%TLDGEN_HOME%\*sources.jar) do (
-			set sourcesJar=!sourcesJar!%%a
-		)
-		set LAUNCH=%LAUNCH% %1 %2;!sourcesJar!
-		shift
-		goto shiftArgument
-	)
-	
 	set LAUNCH=%LAUNCH% %1
-	:shiftArgument
 	shift
 	goto loop
 
@@ -41,6 +30,5 @@ if "%1" == "" goto help
 	goto launch
 	
 :launch
-echo tutu
 	echo %LAUNCH%
 	%LAUNCH%
