@@ -20,9 +20,8 @@ public @interface Attribute {
 	boolean required() default false;         
 
 	/** 
-	 * Whether the attribute is a runtime attribute, default true.  
-	 * Notice that this default value is different from the one specified 
-	 * in the schema, since this is a far more common use case. 
+	 * Whether any EL expression should be evaluated, default true.  
+	 * Notice that this default is different from the schema, since this is much more common in practice. 
 	 */
 	boolean rtexprvalue() default true;
 

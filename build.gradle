@@ -30,7 +30,7 @@ dependencies {
 
 task jar(type: Jar, overwrite: true, dependsOn: compileJava, description: "Creates tldgen.jar") {
 	from(sourceSets.main.classesDir) {
-		include "org/loom/tldgen/annotations/**"
+		include "org/tldgen/annotations/**"
 	}
 }
 
