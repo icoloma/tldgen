@@ -1,4 +1,4 @@
-apply url: 'https://loom.svn.sourceforge.net/svnroot/loom/shared/trunk/extrema.gradle'
+apply from: "$sharedLocation/extrema.gradle"
 
 project.version = tldgenVersion
 
