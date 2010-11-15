@@ -19,11 +19,8 @@ if "%1" == "--help" goto help
 if "%1" == "/?" goto help
 if "%1" == "" goto help
 
-:loop
-	if "%~1" == "" goto launch
-	set LAUNCH=%LAUNCH% %1
-	shift
-	goto loop
+set LAUNCH=%LAUNCH% %*
+goto launch
 
 :help
 	set LAUNCH=!LAUNCH! -sourcepath . -subpackages org
