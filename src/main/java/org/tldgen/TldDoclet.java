@@ -1,10 +1,14 @@
 package org.tldgen;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.tldgen.factory.LibraryFactory;
 import org.tldgen.model.Library;
@@ -110,7 +114,21 @@ public class TldDoclet {
 			}
 			return License.valueOf(license.toUpperCase());
 		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("Invalid license name. Available licenses are: " + StringUtils.join(License.values(), ", "));
+			try {
+				File f = new File(license);
+				if (!f.exists() || !f.isFile()) {
+					String licenseNames = StringUtils.join(ArrayUtils.removeElement(License.values(), License.CUSTOM), ", ");
+					throw new IllegalArgumentException("Invalid license. Available licenses are: " + licenseNames + 
+							", or any valid file location.");
+				}
+				
+				String licenseHeader = FileUtils.readFileToString(f);
+				License license = License.CUSTOM;
+				license.setLicenseHeader(licenseHeader);
+				return license;
+			} catch (IOException e1) {
+				throw new RuntimeException(e1);
+			}
 		}
 	}
 
@@ -148,7 +166,7 @@ public class TldDoclet {
 		out.println("        -formatOutput {true | false}");
 		out.println("        -htmlFolder {HTML documentation directory}");
 		out.println("        -indentSpaces {number of indent spaces}");
-		out.println("        -license {APACHE | GPL | LGPL | MIT | MOZILLA | CC}");
+		out.println("        -license {APACHE | GPL | LGPL | MIT | MOZILLA | CC | NONE | [file location]}");
 		out.println("        -name {name}");
 		out.println("        -tldfile {TLD file name}");  
 		out.println("        -uri {uri name}");

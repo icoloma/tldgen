@@ -28,24 +28,39 @@ public enum License {
 	MOZILLA,
 	
 	/** Creative Commons with attribution */
-	CC;
+	CC,
+	
+	/** No license */
+	NONE,
+	
+	/** Custom license. In this case, a file location must be provided */
+	CUSTOM;
+	
+	private String licenseHeader;
 	
 	/**
 	 * @return the License header to be included in generated files
 	 */
 	public String getLicenseHeader() {
-		String filename = "licenses/" + name() + ".txt";
-		InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(filename);
-		try {
-			if (input == null) {
-				throw new RuntimeException("Could not find license filename '" + filename + "' in the classpath");
+		if (licenseHeader == null) {
+			String filename = "licenses/" + name() + ".txt";
+			InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream(filename);
+			try {
+				if (input == null) {
+					throw new RuntimeException("Could not find license filename '" + filename + "' in the classpath");
+				}
+				licenseHeader = IOUtils.toString(input);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			} finally {
+				IOUtils.closeQuietly(input);
 			}
-			return IOUtils.toString(input);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} finally {
-			IOUtils.closeQuietly(input);
 		}
+		return licenseHeader;
+	}
+
+	public void setLicenseHeader(String licenseHeader) {
+		this.licenseHeader = licenseHeader;
 	}
 	
 }
