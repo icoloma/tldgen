@@ -6,6 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.servlet.jsp.tagext.TagExtraInfo;
+
 
 /**
  * A JSP tag to be included in the generated TLD.
@@ -44,4 +46,8 @@ public @interface Tag {
 	 */
 	String example() default "";
 	
+	/**
+	 * Optional subclass of {@link TagExtraInfo}
+	 */
+	Class<? extends TagExtraInfo> teiClass() default TagExtraInfo.class;
 }

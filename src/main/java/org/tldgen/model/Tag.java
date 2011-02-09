@@ -14,6 +14,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.servlet.jsp.tagext.TagExtraInfo;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,6 +48,9 @@ public class Tag extends AbstractTldContainerElement {
 	
 	/** the list of attributes sorted by name */
 	private Map<String, Attribute> attributesByName = new HashMap<String, Attribute>();
+	
+	/** An optional {@link TagExtraInfo} */
+	Class<? extends TagExtraInfo> teiClass;
 	
 	private static Log log = LogFactory.getLog(Tag.class);
 	

@@ -24,5 +24,6 @@
 	<classpathentry kind="lib" path="src/test/genlib/tools.jar" sourcepath="src/main/lib/tools-sources.jar"/>
 	<classpathentry kind="lib" path="src/test/genlib/junit-4.5.jar"/>
 	<classpathentry kind="lib" path="src/test/genlib/saxon-9.1.0.8.jar" sourcepath="src/main/lib/saxon-9.1.0.8-sources.jar"/>
+	<classpathentry kind="lib" path="src/test/genlib/geronimo-jsp_2.1_spec-1.0.1.jar"/>
 	<classpathentry kind="output" path="build/eclipse-classes"/>
 </classpath>
