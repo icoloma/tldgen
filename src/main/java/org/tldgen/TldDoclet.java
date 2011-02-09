@@ -12,6 +12,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.tldgen.factory.LibraryFactory;
 import org.tldgen.model.Library;
+import org.tldgen.model.TldVersion;
 
 import com.sun.javadoc.RootDoc;
 
@@ -29,6 +30,9 @@ public class TldDoclet {
 	
 	/** TLD file display-name */
 	private static String displayName;
+	
+	/** TLD version */
+	private static String version;
 	
 	/** TLD file short-name */
 	private static String name;
@@ -59,6 +63,7 @@ public class TldDoclet {
 	static {
 		options = new TreeSet<String>();
 		options.add("tldFile");
+		options.add("version");
 		options.add("name");
 		options.add("uri");
 		options.add("htmlFolder");
@@ -98,6 +103,7 @@ public class TldDoclet {
 		if (indentSpaces != null) {
 			builder.setIndentSpaces(indentSpaces);
 		}
+		builder.setVersion(convertVersion());
 		builder.setTldUri(uri);
 		builder.setFormatOutput(formatOutput);
 		builder.setLicense(convertLicense());
@@ -129,6 +135,16 @@ public class TldDoclet {
 			} catch (IOException e1) {
 				throw new RuntimeException(e1);
 			}
+		}
+	}
+	
+	private static TldVersion convertVersion() {
+		if (version == null || "2.0".equals(version)) {
+			return TldVersion.VERSION_20;
+		} else if ("2.1".equals(version)) {
+			return TldVersion.VERSION_21;
+		} else {
+			throw new IllegalArgumentException("Unknown TLD version. Available values are: '2.0', '2.1'");
 		}
 	}
 
@@ -170,6 +186,7 @@ public class TldDoclet {
 		out.println("        -name {name}");
 		out.println("        -tldfile {TLD file name}");  
 		out.println("        -uri {uri name}");
+		out.println("        -version {TLD version}");
 		out.println(""); 
 		out.println("This doclet accepts the following options:");
 		out.println(""); 
@@ -183,6 +200,7 @@ public class TldDoclet {
 		out.println("  -license (optional, default APACHE): The license to include.");
 		out.println("  -tldfile (optional, default src/main/resources/META-INF/{name}.tld): \n" +
 					"   the name of the generated TLD file");
+		out.println("  -version (optional, default 2.0): The TLD version to use.");
 	}
 	
 	/**

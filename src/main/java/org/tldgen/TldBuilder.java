@@ -8,6 +8,7 @@ import javax.xml.stream.XMLStreamException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.tldgen.model.Library;
+import org.tldgen.model.TldVersion;
 import org.tldgen.writers.HtmlLibraryWriter;
 import org.tldgen.writers.TldLibraryWriter;
 
@@ -84,6 +85,10 @@ public class TldBuilder {
 	
 	public void setTldUri(String tldUri) {
 		library.setUri(tldUri);
+	}
+	
+	public void setVersion(TldVersion version) {
+		library.setVersion(version);
 	}
 	
 	public void setLicense(License license) {

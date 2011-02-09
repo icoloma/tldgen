@@ -15,6 +15,9 @@ public class Library {
 	private String displayName;
 	
 	private String uri;
+	
+	/** the version of the TLD to generate */
+	private TldVersion version = TldVersion.VERSION_20;
 
 	/** list of tags in this library */
 	private Set<Tag> tags = new TreeSet<Tag>();
@@ -86,6 +89,14 @@ public class Library {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+	public TldVersion getVersion() {
+		return version;
+	}
+
+	public void setVersion(TldVersion version) {
+		this.version = version;
 	}
 	
 	

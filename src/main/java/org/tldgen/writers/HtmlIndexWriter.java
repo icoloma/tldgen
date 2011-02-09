@@ -46,6 +46,7 @@ public class HtmlIndexWriter extends AbstractHtmlWriter {
 			printTableRow("Name", library.getDisplayName());
 		}
 		printTableRow("Uri", library.getUri());
+		printTableRow("TLD Version", library.getVersion().getId());
 		endTag("tbody");
 		endTag("table");		
 
