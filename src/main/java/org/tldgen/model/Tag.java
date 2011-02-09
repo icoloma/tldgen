@@ -2,6 +2,7 @@ package org.tldgen.model;
 
 import static org.tldgen.util.JavadocUtils.getAnnotation;
 import static org.tldgen.util.JavadocUtils.getBooleanAttribute;
+import static org.tldgen.util.JavadocUtils.getClassAttribute;
 import static org.tldgen.util.JavadocUtils.getEnumAttribute;
 import static org.tldgen.util.JavadocUtils.getStringArrayAttribute;
 
@@ -50,7 +51,7 @@ public class Tag extends AbstractTldContainerElement {
 	private Map<String, Attribute> attributesByName = new HashMap<String, Attribute>();
 	
 	/** An optional {@link TagExtraInfo} */
-	Class<? extends TagExtraInfo> teiClass;
+	private String teiClass;
 	
 	private static Log log = LogFactory.getLog(Tag.class);
 	
@@ -69,6 +70,10 @@ public class Tag extends AbstractTldContainerElement {
 		this.setBodyContent(bodyContent == null? BodyContent.SCRIPTLESS : BodyContent.valueOf(bodyContent));
 		Boolean dynamicAttributes = getBooleanAttribute(annotation, "dynamicAttributes");
 		this.setDynamicAttributes(dynamicAttributes != null? dynamicAttributes : false);
+		ClassDoc teiClassName = getClassAttribute(annotation, "teiClass");
+		if (teiClassName != null && !teiClassName.toString().equals(TagExtraInfo.class.getName())) {
+			this.setTeiClass(teiClassName.toString());
+		}
 	}
 	
 	private static void recollectTagData(ClassDoc doc, Tag tag, Set<String> excludeProperties) {
@@ -185,6 +190,14 @@ public class Tag extends AbstractTldContainerElement {
 	
 	public Collection<Attribute> getAttributes() {
 		return attributes;
+	}
+
+	public String getTeiClass() {
+		return teiClass;
+	}
+
+	public void setTeiClass(String teiClass) {
+		this.teiClass = teiClass;
 	}
 
 }

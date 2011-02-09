@@ -14,6 +14,7 @@ import org.tldgen.model.Attribute;
 import org.tldgen.model.Function;
 import org.tldgen.model.Library;
 import org.tldgen.model.Tag;
+import org.tldgen.tags.DummyTei;
 
 import com.sun.tools.javadoc.Main;
 
@@ -52,6 +53,7 @@ public class LibraryFactoryTest {
 		assertTrue(tag.isDynamicAttributes());
 		assertEquals("Tag example", tag.getExample());
 		assertEquals("Dummy display name", tag.getDisplayName());
+		assertEquals(DummyTei.class.getName(), tag.getTeiClass());
 		
 		// check tag attributes
 		Attribute foo = getAttribute(tag, "foo");

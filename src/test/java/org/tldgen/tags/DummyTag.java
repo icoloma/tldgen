@@ -10,7 +10,8 @@ import org.tldgen.annotations.Tag;
 	displayName="Dummy display name",
 	dynamicAttributes=true,
 	icon="foo",
-	example="Tag example"
+	example="Tag example",
+	teiClass=DummyTei.class
 )
 public class DummyTag {
 	

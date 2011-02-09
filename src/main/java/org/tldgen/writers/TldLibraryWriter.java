@@ -121,6 +121,7 @@ public class TldLibraryWriter extends AbstractWriter {
 			writeElement("icon", tag.getIcon());
 			writeElement("name", tag.getName());
 			writeElement("tag-class", tag.getClazz());
+			writeElement("tei-class", tag.getTeiClass());
 			writeElement("body-content", tag.getBodyContent().getTldValue());
 			writeTagAttributes(tag.getName(), tag.getAttributes());
 			writeElement("dynamic-attributes", tag.isDynamicAttributes()? tag.isDynamicAttributes() : null);

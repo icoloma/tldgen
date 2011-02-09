@@ -7,11 +7,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.sun.javadoc.AnnotationDesc;
+import com.sun.javadoc.AnnotationDesc.ElementValuePair;
 import com.sun.javadoc.AnnotationTypeDoc;
 import com.sun.javadoc.AnnotationValue;
+import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.FieldDoc;
 import com.sun.javadoc.ProgramElementDoc;
-import com.sun.javadoc.AnnotationDesc.ElementValuePair;
 import com.sun.tools.javadoc.AnnotationDescImpl.ElementValuePairImpl;
 
 /**
@@ -56,6 +57,13 @@ public class JavadocUtils {
 	 */
 	public static String getStringAttribute(AnnotationDesc annotation, String name) {
 		return (String) getAttribute(annotation, name);
+	}
+	
+	/**
+	 * @return the Class value of the specified attribute
+	 */
+	public static ClassDoc getClassAttribute(AnnotationDesc annotation, String name) {
+		return (ClassDoc) getAttribute(annotation, name);
 	}
 	
 	/**

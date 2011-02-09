@@ -57,6 +57,7 @@ public class HtmlTagWriter extends AbstractHtmlWriter {
 		printTableEntry("Tag Class", tag.getClazz());
 		printTableEntry("Display Name", tag.getDisplayName());
 		printTableEntry("Icon", tag.getIcon());
+		printTableEntry("TagExtraInfo", tag.getTeiClass());
 		printTableEntry("Body Content", tag.getBodyContent().getTldValue());
 		printTableEntry("Dynamic Attributes",  tag.isDynamicAttributes().toString());
 		if (isPrintable(tag.getExample())) {
