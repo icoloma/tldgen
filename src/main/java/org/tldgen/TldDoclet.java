@@ -201,6 +201,7 @@ public class TldDoclet {
 		out.println("  -tldfile (optional, default src/main/resources/META-INF/{name}.tld): \n" +
 					"   the name of the generated TLD file");
 		out.println("  -version (optional, default 2.0): The TLD version to use.");
+		out.println("");
 	}
 	
 	/**

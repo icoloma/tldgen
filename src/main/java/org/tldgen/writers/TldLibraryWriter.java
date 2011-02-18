@@ -9,6 +9,7 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.tldgen.License;
@@ -72,7 +73,10 @@ public class TldLibraryWriter extends AbstractWriter {
 	private void startTaglibElement(Library library) throws XMLStreamException, IOException {
 		log.debug("Writing TLD file header");
 		writer.writeStartDocument("UTF-8", "1.0");
-		writer.writeComment(license.getLicenseHeader());
+		String licenseContent = license.getLicenseHeader();
+		if (!StringUtils.isEmpty(licenseContent)) {
+			writer.writeComment(licenseContent);
+		}
 		startElement("taglib");
 		writeAttribute("xmlns", "http://java.sun.com/xml/ns/j2ee");
 		writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");

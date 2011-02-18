@@ -1,7 +1,6 @@
 #!/bin/bash
-DIRNAME=$(dirname $0)
+DIRNAME=$(dirname $0)/..
 
-DIRNAME=`echo $DIRNAME | sed -e 's/\/bin$//g'`
 CP=`echo $DIRNAME/lib/*.jar $DIRNAME/*tools*.jar | sed -e 's/ /:/g'`
 
 COMMAND="javadoc -docletpath $CP -private -doclet org.tldgen.TldDoclet"
