@@ -50,7 +50,7 @@ public class TldDoclet {
 	private static String license;
 	
 	/** true to format output, false otherwise. Default true */
-	private static boolean formatOutput = true;
+	private static String formatOutput = "true";
 
 	private static Library library;	
 	
@@ -105,7 +105,7 @@ public class TldDoclet {
 		}
 		builder.setVersion(convertVersion());
 		builder.setTldUri(uri);
-		builder.setFormatOutput(formatOutput);
+		builder.setFormatOutput(Boolean.valueOf(formatOutput));
 		builder.setLicense(convertLicense());
 		builder.createTLD(tldFile);
 		builder.createHtmlDoc(htmlFolder);

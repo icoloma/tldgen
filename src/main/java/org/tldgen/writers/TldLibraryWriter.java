@@ -78,7 +78,7 @@ public class TldLibraryWriter extends AbstractWriter {
 			writer.writeComment(licenseContent);
 		}
 		startElement("taglib");
-		writeAttribute("xmlns", "http://java.sun.com/xml/ns/j2ee");
+		writeAttribute("xmlns", "http://java.sun.com/xml/ns/javaee");
 		writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 		writeAttribute("xsi:schemaLocation", library.getVersion().getSchemaLocation());
 		writeAttribute("version", library.getVersion().getId());
