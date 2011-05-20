@@ -1,15 +1,19 @@
 package org.tldgen.model;
 
 import static org.tldgen.util.JavadocUtils.getAnnotation;
+import static org.tldgen.util.JavadocUtils.getAnnotationArrayAttribute;
 import static org.tldgen.util.JavadocUtils.getBooleanAttribute;
 import static org.tldgen.util.JavadocUtils.getClassAttribute;
 import static org.tldgen.util.JavadocUtils.getEnumAttribute;
 import static org.tldgen.util.JavadocUtils.getStringArrayAttribute;
+import static org.tldgen.util.JavadocUtils.getStringAttribute;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -22,6 +26,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.tldgen.annotations.BodyContent;
 import org.tldgen.annotations.ExcludeProperties;
+import org.tldgen.annotations.VariableScope;
+import org.tldgen.util.JavadocUtils;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
@@ -50,6 +56,9 @@ public class Tag extends AbstractTldContainerElement {
 	/** the list of attributes sorted by name */
 	private Map<String, Attribute> attributesByName = new HashMap<String, Attribute>();
 	
+	/** list of Variables used by this tag */
+	private List<Variable> variables = new ArrayList<Variable>();
+	
 	/** An optional {@link TagExtraInfo} */
 	private String teiClass;
 	
@@ -66,14 +75,29 @@ public class Tag extends AbstractTldContainerElement {
 	@Override
 	public void postProcessElement(ProgramElementDoc doc, AnnotationDesc annotation) {
 		super.postProcessElement(doc, annotation);
+		
+		// body content
 		String bodyContent = getEnumAttribute(annotation, "bodyContent");
 		this.setBodyContent(bodyContent == null? BodyContent.SCRIPTLESS : BodyContent.valueOf(bodyContent));
+		
+		// dynamic attributes
 		Boolean dynamicAttributes = getBooleanAttribute(annotation, "dynamicAttributes");
 		this.setDynamicAttributes(dynamicAttributes != null? dynamicAttributes : false);
+		
+		// tei
 		ClassDoc teiClassName = getClassAttribute(annotation, "teiClass");
 		if (teiClassName != null && !teiClassName.toString().equals(TagExtraInfo.class.getName())) {
 			this.setTeiClass(teiClassName.toString());
 		}
+		
+		// variables
+		AnnotationDesc[] variables = getAnnotationArrayAttribute(annotation, "variables");
+		if (variables != null && variables.length > 0) {
+			for (AnnotationDesc variableAnnotation : variables) {
+				addVariable(null, variableAnnotation);
+			}
+		}
+		
 	}
 	
 	private static void recollectTagData(ClassDoc doc, Tag tag, Set<String> excludeProperties) {
@@ -89,30 +113,73 @@ public class Tag extends AbstractTldContainerElement {
     	
     	// add annotated attributes
     	for (FieldDoc fieldDoc : doc.fields()) {
-			Attribute attribute = parseAttribute(fieldDoc);
+			Attribute attribute = addMember(fieldDoc, tag, excludeProperties);
 			if (attribute != null) {
-				if (excludeProperties.contains(attribute.getName())) {
-					log.debug("Skipped " + tag.getName() + "." + attribute.getName() + " because it was contained in @ExcludeProperties");
-				} else {
-					tag.addAttribute(attribute);
+				AnnotationDesc variableAnnotation = getAnnotation(fieldDoc, org.tldgen.annotations.Variable.class);
+				if (variableAnnotation != null) {
+					tag.addVariable(attribute.getName(), variableAnnotation);
 				}
 			}
+			
 		}
     	
     	// add annotated setter methods
     	for (MethodDoc methodDoc : doc.methods()) {
-    		Attribute attribute = parseAttribute(methodDoc);
-    		if (attribute != null) {
-    			if (excludeProperties.contains(attribute.getName())) {
-    				log.debug("Skipped " + tag.getName() + "." + attribute.getName() + " because it was contained in @ExcludeProperties");
-    			} else {
-    				tag.addAttribute(attribute);
-    			}
-    		}
+			addMember(methodDoc, tag, excludeProperties);
     	}
     	
 	}
 	
+	private static Attribute addMember(MemberDoc doc, Tag tag, Set<String> excludeProperties) {
+		Attribute attribute = parseAttribute(doc);
+		if (attribute != null) {
+			if (excludeProperties.contains(attribute.getName())) {
+				log.debug("Skipped " + tag.getName() + "." + attribute.getName() + " because it was contained in @ExcludeProperties");
+			} else {
+				tag.addAttribute(attribute);
+			}
+		}		
+		return attribute;
+	}
+	
+	/**
+	 * Parse a Variable annotation. If bound to an attribute, use the nameFromAttribute
+	 * @param attributeName if bound to an attribute, the attribute name. Otherwise, null
+	 * @param the Variable annotation
+	 */
+	private Variable addVariable(String attributeName, AnnotationDesc annotation) {
+		Variable variable = new Variable();
+		String nameGiven = JavadocUtils.getStringAttribute(annotation, "nameGiven");
+		if (attributeName != null) {
+			if (nameGiven != null && nameGiven.length() > 0) {
+				throw new IllegalArgumentException("Cannot specify @Variable.nameGiven bound to attribute '" + attributeName + "'. Use @Tag.variables instead");
+			}
+			variable.setNameFromAttribute(attributeName);
+		} else {
+			if (nameGiven == null || nameGiven.length() == 0) {
+				throw new IllegalArgumentException("Missing @Variable.nameGiven value");
+			}
+			variable.setNameGiven(nameGiven);
+		}
+		
+		Boolean declare = getBooleanAttribute(annotation, "declare");
+		if (declare != null) {
+			variable.setDeclare(declare);
+		}
+		ClassDoc variableClass = getClassAttribute(annotation, "variableClass");
+		if (variableClass != null) {
+			variable.setVariableClass(variableClass);
+		}
+		String scopeValue = getEnumAttribute(annotation, "scope");
+		if (scopeValue != null) {
+			variable.setScope(VariableScope.valueOf(scopeValue));
+		}
+		String description = getStringAttribute(annotation, "description");
+		if (description != null && description.length() > 0) {
+			variable.setDescription(description);
+		}
+		return this.addVariable(variable);
+	}
 	
 	/**
 	 * Parse a field or method javadoc and return the instantiated {@link Attribute} instance 
@@ -149,8 +216,13 @@ public class Tag extends AbstractTldContainerElement {
 		return oldValue;
 	}
 	
+	public Variable addVariable(Variable variable) {
+		this.variables.add(variable);
+		return variable;
+	}
+	
 	/**
-	 * Remove an attribuite if it exists, do nothing if not
+	 * Remove an attribute if it exists, do nothing if not
 	 * @param name the name of the attribute
 	 * @return the removed attribute, if any. Null if not found 
 	 */
@@ -198,6 +270,10 @@ public class Tag extends AbstractTldContainerElement {
 
 	public void setTeiClass(String teiClass) {
 		this.teiClass = teiClass;
+	}
+
+	public List<Variable> getVariables() {
+		return variables;
 	}
 
 }

@@ -8,37 +8,27 @@ import java.io.FileReader;
 import org.custommonkey.xmlunit.Diff;
 import org.junit.Before;
 import org.junit.Test;
-import org.tldgen.License;
-import org.tldgen.TldBuilder;
 import org.tldgen.mock.MockLibraryFactory;
 import org.tldgen.model.Library;
 
-public class TldWriterTest {
+public class TldLibraryWriterTest {
 
 	/** created TLD file */
-	private String tldFilename = OUTPUT_FOLDER + "TldWriterTest-output/tldgen-test.tld";
+	private String tldFolder = OUTPUT_FOLDER + "TldWriterTest-output";
 
 	private Library library;
 
 	@Before
 	public void initLibrary() {
-		library = new MockLibraryFactory().createLibrary();
+		library = new MockLibraryFactory().createLibrary("loom");
 	}
 
 	@Test
 	public void writeTldTest() throws Exception {
-		TldBuilder builder = new TldBuilder();
-		builder.setLibrary(library);
-		
-		builder.setDisplayName("Loom Core Tag Library");
-		builder.setLicense(License.APACHE);
-		builder.setShortName("loom");
-		//builder.setTabSpaces("0");
-		builder.setTldUri("http://loom.extrema-sistemas.org/loom-core.tld");
-		builder.createTLD(tldFilename);
-
+		TldLibraryWriter writer = new TldLibraryWriter();
+		writer.writeTLD(library, tldFolder);
 		FileReader expected = new FileReader( "src/test/resources/org/tldgen/writers/expected-output.tld");
-		Diff myDiff = new Diff( new FileReader(tldFilename), expected);
+		Diff myDiff = new Diff( new FileReader(tldFolder + "/loom.tld"), expected);
 		assertTrue("XSL transformation worked as expected " + myDiff, myDiff.similar());
 	}
 }

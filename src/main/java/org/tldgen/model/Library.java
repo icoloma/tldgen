@@ -10,20 +10,18 @@ import java.util.TreeSet;
  */
 public class Library {
 	
-	private String shortName;
+	/** the data identifying this library */
+	private LibrarySignature librarySignature;
 	
-	private String displayName;
-	
-	private String uri;
-	
-	/** the version of the TLD to generate */
-	private TldVersion version = TldVersion.VERSION_20;
-
 	/** list of tags in this library */
 	private Set<Tag> tags = new TreeSet<Tag>();
 	
 	/** list of functions in this library */
 	private Set<Function> functions = new TreeSet<Function>();
+
+	public Library(LibrarySignature librarySignature) {
+		this.librarySignature = librarySignature;
+	}
 
 	/**
 	 * Convenience method to get tag by name
@@ -67,38 +65,8 @@ public class Library {
 		return functions;
 	}
 
-	public String getShortName() {
-		return shortName;
+	public LibrarySignature getLibrarySignature() {
+		return librarySignature;
 	}
-
-	public void setShortName(String name) {
-		this.shortName = name;
-	}
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
-
-	public String getUri() {
-		return uri;
-	}
-
-	public void setUri(String uri) {
-		this.uri = uri;
-	}
-
-	public TldVersion getVersion() {
-		return version;
-	}
-
-	public void setVersion(TldVersion version) {
-		this.version = version;
-	}
-	
-	
 	
 }

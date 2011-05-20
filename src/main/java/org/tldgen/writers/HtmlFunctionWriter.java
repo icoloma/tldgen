@@ -2,7 +2,9 @@ package org.tldgen.writers;
 
 import java.io.IOException;
 
+import org.apache.commons.lang.StringUtils;
 import org.tldgen.model.Function;
+import org.tldgen.model.FunctionParameter;
 import org.tldgen.model.Library;
 
 public class HtmlFunctionWriter extends AbstractHtmlWriter {
@@ -45,13 +47,6 @@ public class HtmlFunctionWriter extends AbstractHtmlWriter {
 		printHeader(2, function.getName());
 		print(function.getHtmlDescription());
 		startTag("table");
-		startTag("thead");
-		startTag("tr");
-		startTag("th", "colspan","2");
-		print("Function information");
-		endTag("th");
-		endTag("tr");
-		endTag("thead");
 		startTag("tbody");
 		writeInfo(function);
 		endTag("tbody");
@@ -66,11 +61,32 @@ public class HtmlFunctionWriter extends AbstractHtmlWriter {
 	private void writeInfo(Function function) throws IOException {
 		printTableEntry("Function Class", function.getClazz());
 		printTableEntry("Display Name", function.getDisplayName());
-		printTableEntry("Icon", function.getIcon());
 		printTableEntry("Signature", function.getSignature());
+		printFunctionParams(function.getParameters());
+		printTableEntry("Return", function.getReturnDescription());
 		if (isPrintable(function.getExample())) {
 			printTableEntry("Example", "<pre class=\"code\">" + function.getExample() + "</pre>");
 		}
+	}
+
+
+	private void printFunctionParams(FunctionParameter[] parameters) throws IOException {
+		if (parameters == null || parameters.length == 0) {
+			return;
+		}
+		startTag("tr");
+		startTag("td").print("Parameters").endTag("td");
+		startTag("td").startTag("ul");
+		for (FunctionParameter param : parameters) {
+			startTag("li");
+			startTag("strong").print(param.getType() + " " + param.getName()).endTag("strong");
+			if (!StringUtils.isEmpty(param.getDescription())) {
+				print(": ").print(param.getDescription());
+			}
+			endTag("li");
+			
+		}
+		endTag("ul").endTag("td").endTag("tr");
 	}
 	
 }

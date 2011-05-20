@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
 import org.tldgen.model.Library;
+import org.tldgen.model.LibrarySignature;
 
 public class HtmlIndexWriter extends AbstractHtmlWriter {
 	
@@ -18,11 +19,11 @@ public class HtmlIndexWriter extends AbstractHtmlWriter {
 		startBody();
 		
 		startTag("div", "class","yui-g bottom-delimiter");
-		printHeader(1, library.getShortName());
+		printHeader(1, library.getLibrarySignature().getShortName());
 		endTag("div");
 		startTag("div", "class","yui-g bottom-delimiter");
 
-		writeLibraryInformation(library);
+		writeLibrarySignature(library.getLibrarySignature());
 		
 		endTag("div");
 		
@@ -32,7 +33,7 @@ public class HtmlIndexWriter extends AbstractHtmlWriter {
 		endDocument();
 	}
 	
-	private void writeLibraryInformation(Library library) throws IOException {
+	private void writeLibrarySignature(LibrarySignature library) throws IOException {
 		startTag("table");
 		startTag("thead");
 		startTag("tr");
@@ -47,6 +48,12 @@ public class HtmlIndexWriter extends AbstractHtmlWriter {
 		}
 		printTableRow("Uri", library.getUri());
 		printTableRow("TLD Version", library.getVersion().getId());
+		if (!StringUtils.isEmpty(library.getSmallIcon()) || !StringUtils.isEmpty(library.getLargeIcon())) {
+			printTableRow("Icons", library.getSmallIcon() + " " + library.getLargeIcon());
+		}
+		if (!StringUtils.isEmpty(library.getDescription())) {
+			printTableRow("Description", library.getDescription());
+		}
 		endTag("tbody");
 		endTag("table");		
 

@@ -13,9 +13,20 @@ public class DummyFunction {
 	public static void bar() {
 		
 	}
-	
+
+	/**
+	 * 
+	 * @param primitive
+	 * @param unqualified Argument description
+	 * @return Dubbity doo
+	 */
 	@Function
 	public static Integer baz(int primitive, String unqualified, org.tldgen.tags.DummyFunction qualified) {
+		return null;
+	}
+	
+	@Function
+	public static Integer baz2(int primitive, String unqualified, org.tldgen.tags.DummyFunction qualified) {
 		return null;
 	}
 	

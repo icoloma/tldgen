@@ -1,5 +1,8 @@
 package org.tldgen;
 
+import static org.tldgen.util.JavadocUtils.getEnumAttribute;
+import static org.tldgen.util.JavadocUtils.getStringAttribute;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -10,10 +13,14 @@ import java.util.TreeSet;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.tldgen.factory.LibraryFactory;
+import org.tldgen.annotations.License;
+import org.tldgen.annotations.TldVersion;
 import org.tldgen.model.Library;
-import org.tldgen.model.TldVersion;
+import org.tldgen.model.LibrarySignature;
+import org.tldgen.util.JavadocUtils;
 
+import com.sun.javadoc.AnnotationDesc;
+import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.RootDoc;
 
 /**
@@ -24,10 +31,8 @@ import com.sun.javadoc.RootDoc;
 public class TldDoclet {
 	
 	private static String DEFAULT_HTML_FOLDER = "build/docs/tlddoc";
+	private static String DEFAULT_TLD_FOLDER = "src/main/resources/META-INF";
 
-	/** TLD output file */
-	private static String tldFile;
-	
 	/** TLD file display-name */
 	private static String displayName;
 	
@@ -43,6 +48,9 @@ public class TldDoclet {
 	/** HTML documentation target directory */
 	private static String htmlFolder = DEFAULT_HTML_FOLDER;
 	
+	/** TLD target directory */
+	private static String tldFolder = DEFAULT_TLD_FOLDER;
+	
 	/** TLD File ident */
 	private static String indentSpaces;
 	
@@ -50,34 +58,27 @@ public class TldDoclet {
 	private static String license;
 	
 	/** true to format output, false otherwise. Default true */
-	private static String formatOutput = "true";
+	private static String formatOutput;
 
-	private static Library library;	
-	
 	/** options accepted by this Doclet */
 	private static Set<String> options;
 	
-	/** required options accepted by this Doclet */
-	private static Set<String> requiredOptions;
+	/** for testing purposes */
+	public static Library library;
 	
 	static {
 		options = new TreeSet<String>();
-		options.add("tldFile");
-		options.add("version");
-		options.add("name");
-		options.add("uri");
+		options.add("displayName");
+		options.add("formatOutput");
 		options.add("htmlFolder");
 		options.add("license");	
-		options.add("displayName");
+		options.add("name");
 		options.add("tabSpaces");
-		options.add("formatOutput");
+		options.add("tldFolder");
+		options.add("uri");
+		options.add("version");
 		
-		requiredOptions = new TreeSet<String>();
-		requiredOptions.add("name");
-		requiredOptions.add("uri");
 	}
-	
-	
 	
 	/**
 	 * @throws IllegalArgumentException
@@ -87,36 +88,58 @@ public class TldDoclet {
 	 *             if closing a output stream that it is not opened
 	 */
 	public static boolean start(RootDoc root) {
-		
-		parseOptions(root.options());
-		if (!checkRequiredOptions()) {
-			showUsage();
-			return false;
+		boolean result = false;
+		try {
+			DocletOptions options = parseOptions(root.options());
+			TldWorker worker = new TldWorker(options);
+			if (name != null && uri != null) {
+				library = worker.processLibrary(root.classes(), createLibrarySignatureFromCommandLine(), tldFolder, htmlFolder);
+				result = true;
+			} else {
+				for (PackageDoc tagsPackage : root.specifiedPackages()) {
+					AnnotationDesc libraryAnnotation = JavadocUtils.getAnnotation(tagsPackage, org.tldgen.annotations.Library.class);
+					if (libraryAnnotation != null) {
+						library = worker.processLibrary(tagsPackage.allClasses(), createLibrarySignatureFromAnnotation(libraryAnnotation), tldFolder, htmlFolder);
+						result = true;
+					}
+				}
+			}
+		} finally {
+			if (!result) {
+				showUsage();
+			}
 		}
+		return result;
 		
-		TldBuilder builder = new TldBuilder();
-		library = new LibraryFactory().parse(root);
-		builder.setLibrary(library);
-
-		builder.setDisplayName(displayName);
-		builder.setShortName(name);
-		if (indentSpaces != null) {
-			builder.setIndentSpaces(indentSpaces);
-		}
-		builder.setVersion(convertVersion());
-		builder.setTldUri(uri);
-		builder.setFormatOutput(Boolean.valueOf(formatOutput));
-		builder.setLicense(convertLicense());
-		builder.createTLD(tldFile);
-		builder.createHtmlDoc(htmlFolder);
-		return true;
-		
+	}
+	
+	public static LibrarySignature createLibrarySignatureFromCommandLine() {
+		LibrarySignature librarySignature = new LibrarySignature();
+		librarySignature.setDisplayName(displayName);
+		librarySignature.setLicense(convertLicense());
+		librarySignature.setShortName(name);
+		librarySignature.setUri(uri);
+		librarySignature.setVersion(convertVersion());
+		return librarySignature;
+	}
+	
+	public static LibrarySignature createLibrarySignatureFromAnnotation(AnnotationDesc libraryAnnotation) {
+		LibrarySignature librarySignature = new LibrarySignature();
+		librarySignature.setDescription(getStringAttribute(libraryAnnotation, "description"));
+		librarySignature.setDisplayName(getStringAttribute(libraryAnnotation, "displayName"));
+		librarySignature.setSmallIcon(getStringAttribute(libraryAnnotation, "smallIcon"));
+		librarySignature.setLargeIcon(getStringAttribute(libraryAnnotation, "largeIcon"));
+		librarySignature.setShortName(getStringAttribute(libraryAnnotation, "shortName"));
+		librarySignature.setUri(getStringAttribute(libraryAnnotation, "uri"));
+		librarySignature.setLicense(License.valueOf(getEnumAttribute(libraryAnnotation, "license")));
+		librarySignature.setVersion(TldVersion.valueOf(getEnumAttribute(libraryAnnotation, "version")));
+		return librarySignature;
 	}
 	
 	private static License convertLicense() {
 		try {
 			if (license == null) {
-				return License.APACHE;
+				return License.NONE;
 			}
 			return License.valueOf(license.toUpperCase());
 		} catch (IllegalArgumentException e) {
@@ -148,28 +171,6 @@ public class TldDoclet {
 		}
 	}
 
-	/**
-	 * Check that all required fields are present
-	 * @return true if all required fields  are present, false otherwise
-	 */
-	private static boolean checkRequiredOptions() {
-		try {
-			boolean result = true;
-			for (String option : requiredOptions) {
-				Field field = TldDoclet.class.getDeclaredField(option);
-				Object value = field.get(null);
-				if (value == null) {
-					System.out.println("ERROR: Missing -" + option + " argument");
-					result = false;
-				}
-			}
-			return result;
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		} catch (NoSuchFieldException e) {
-			throw new RuntimeException(e);
-		}
-	}
 
 	private static void showUsage() {
 		PrintStream out = System.out;
@@ -184,23 +185,26 @@ public class TldDoclet {
 		out.println("        -indentSpaces {number of indent spaces}");
 		out.println("        -license {APACHE | GPL | LGPL | MIT | MOZILLA | CC | NONE | [file location]}");
 		out.println("        -name {name}");
-		out.println("        -tldfile {TLD file name}");  
+		out.println("        -tldFolder {TLD folder name}");  
 		out.println("        -uri {uri name}");
 		out.println("        -version {TLD version}");
 		out.println(""); 
 		out.println("This doclet accepts the following options:");
 		out.println(""); 
-		out.println("  -name (required): the <name> element of the TLD file");
-		out.println("  -uri (required): the <uri> element of the TLD file");
+		out.println("  -name: the <name> element of the TLD file");
+		out.println("  -uri: the <uri> element of the TLD file");
 		out.println("  -displayName (optional): the <display-name> element of the TLD file");
 		out.println("  -formatOutput (optional, default true): Indent the generated files.");
 		out.println("  -htmlFolder (optional, default " + DEFAULT_HTML_FOLDER + "): the folder \n" +
 					"   where HTML documentation will be stored");
 		out.println("  -indentSpaces (optional, default 4): spaces used for indenting XML content.");
-		out.println("  -license (optional, default APACHE): The license to include.");
-		out.println("  -tldfile (optional, default src/main/resources/META-INF/{name}.tld): \n" +
-					"   the name of the generated TLD file");
+		out.println("  -license (optional, default NONE): The license to include.");
+		out.println("  -tldFolder (optional, default src/main/resources/META-INF/): \n" +
+					"   the folder where the TLD file will be stored.");
 		out.println("  -version (optional, default 2.0): The TLD version to use.");
+		out.println("");
+		out.println("If -name or -uri is not present, TldGen will search for @Library annotations in ");
+		out.println("the root packages");
 		out.println("");
 	}
 	
@@ -208,7 +212,7 @@ public class TldDoclet {
 	 * Parse the user options received by this doclet
 	 * @param userOptions the list of extra options accepted by javadoc
 	 */
-	private static void parseOptions(String[][] userOptions) {
+	private static DocletOptions parseOptions(String[][] userOptions) {
 		try {
 			for (String[] option : userOptions) {		
 				String fieldName = option[0].substring(1);
@@ -217,9 +221,21 @@ public class TldDoclet {
 					field.set(null, option[1]);
 				}
 			}
-			if (tldFile == null) {
-				tldFile = "src/main/resources/META-INF/" + name + ".tld";
+			
+			DocletOptions options = new DocletOptions();
+			if (formatOutput != null) {
+				options.withFormatOutput(Boolean.valueOf(formatOutput));
 			}
+			if (indentSpaces != null) {
+				options.withIndentSpaces(indentSpaces);
+			}
+			if (license != null) {
+				options.withLicense(convertLicense());
+			}
+			if (version != null) {
+				options.withVersion(convertVersion()) ;
+			}
+			return options;
 		} catch (NoSuchFieldException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalAccessException e) {
@@ -239,11 +255,6 @@ public class TldDoclet {
 	public static int optionLength(String option) {
 		return options.contains("-" + option)? 0 : 2; 
 	}
-	
-	public static Library getLibrary() {
-		return library;
-	}
-	
 	
 
 }

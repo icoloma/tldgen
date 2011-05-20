@@ -3,9 +3,11 @@ package org.tldgen.writers;
 import java.io.IOException;
 import java.util.Collection;
 
+import org.tldgen.annotations.VariableScope;
 import org.tldgen.model.Attribute;
 import org.tldgen.model.Library;
 import org.tldgen.model.Tag;
+import org.tldgen.model.Variable;
 
 public class HtmlTagWriter extends AbstractHtmlWriter {
 	
@@ -66,16 +68,16 @@ public class HtmlTagWriter extends AbstractHtmlWriter {
 		endTag("tbody");
 		endTag("table");
 		
-		writeAttributeInfo(tag.getAttributes());
+		writeAttributes(tag.getAttributes());
+		writeVariables(tag.getVariables());
 		
 	}
-	
 
 	/**
 	 * Write content of the Attribute information
 	 * @param attributes {@link Attribute}
 	 */
-	private void writeAttributeInfo(Collection<Attribute> attributes) throws IOException{
+	private void writeAttributes(Collection<Attribute> attributes) throws IOException{
 		if (attributes.isEmpty()) {
 			return;
 		}
@@ -105,7 +107,35 @@ public class HtmlTagWriter extends AbstractHtmlWriter {
 		}
 		endTag("tbody");
 		endTag("table");
+	}
+	
+	/**
+	 * Write content of the Variable information
+	 * @param variables {@link Variable}
+	 */
+	private void writeVariables(Collection<Variable> variables) throws IOException{
+		if (variables.isEmpty()) {
+			return;
+		}
 		
+		printHeader(2, "Variables");
+		startTag("table", "class", "tag-variables");
+		startTag("thead");
+		printTableHeaders("Name", "Description", "Declare", "Scope");
+		endTag("thead");
+		
+		startTag("tbody");
+		for (Variable variable : variables) {
+			String name = variable.getNameGiven() != null? variable.getNameGiven() : "given by " + variable.getNameFromAttribute();
+			printTableRow(
+					name, 
+					variable.getDescription(), 
+					String.valueOf(variable.isDeclare()),
+					(variable.getScope() == null? VariableScope.NESTED : variable.getScope()).toString() 
+			);
+		}
+		endTag("tbody");
+		endTag("table");
 	}
 	
 	/**

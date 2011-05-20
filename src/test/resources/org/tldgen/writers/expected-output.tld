@@ -28,6 +28,9 @@
             <name>foo</name>
             <required>true</required>
         </attribute>
+        <variable>
+            <name-given>foo</name-given>
+        </variable>
         <example>dummy example</example>
     </tag>
     <tag>
@@ -47,8 +50,13 @@
         <example>function0 example</example>
     </function>
     <function>
+        <description>
+            * int param1: Mock description
+            Return: Returns true if the argument is 42, false otherwise. Go figure.
+        </description>
         <name>function1</name>
         <function-class>org.tldgen.targetfunctions.FunctionSampleUtil</function-class>
+        <function-signature>java.lang.String function0(int param1)</function-signature>
         <example>function1 example</example>
     </function>
 </taglib>

@@ -3,28 +3,22 @@ package org.tldgen.util;
 import java.io.File;
 
 public class DirectoryUtils {
-
-	/**
-	 * @param htmlFolder path of the html folder
-	 * @throws RuntimeException if error cleaning target folder
-	 */
-	public static void createHtmlFolder(String htmlFolder) {
-		createFolder(htmlFolder);
-	}
 	
 	/**
-	 * @param tldFile path of the tld file
+	 * Create a parent folder to the specified file name.
+	 * @param targetFile path of the file
 	 * @throws RuntimeException if error cleaning target folder
 	 */
-	public static void createTldFolder(String tldFile) {
-		File file = new File(tldFile);
+	public static void createParentFolder(String targetFile) {
+		File file = new File(targetFile);
 		createFolder(file.getParent());
 	}
 	
-	private static void createFolder(String targetFolder) {
+	public static void createFolder(String targetFolder) {
 		File folder = new File(targetFolder);
 		if (!folder.isDirectory()) {
 			folder.mkdirs();
 		}
 	}
+	
 }

@@ -12,6 +12,7 @@ import org.tldgen.TldDoclet;
 import org.tldgen.annotations.BodyContent;
 import org.tldgen.model.Attribute;
 import org.tldgen.model.Function;
+import org.tldgen.model.FunctionParameter;
 import org.tldgen.model.Library;
 import org.tldgen.model.Tag;
 import org.tldgen.tags.DummyTei;
@@ -38,7 +39,7 @@ public class LibraryFactoryTest {
 					"-indentSpaces", "4", "-license", "APACHE", "-version", "2.1"
 			});
 			assertEquals("The javadoc command did not exit successfully. Check the system log for details", 0, result);
-			library = TldDoclet.getLibrary();
+			library = TldDoclet.library;
 			assertNotNull(library);
 		}
 	}
@@ -103,13 +104,27 @@ public class LibraryFactoryTest {
 		assertEquals("Function example", bar.getExample());
 		assertEquals("bar display name", bar.getDisplayName());
 		
-		// check empty function
+		// check function with parameters
 		Function baz = library.getFunction("baz");
 		assertNotNull(baz);
-		assertNull(baz.getIcon());
-		assertNull(baz.getExample());
-		assertNull(baz.getDisplayName());
+		assertEquals("Dubbity doo", baz.getReturnDescription());
+		FunctionParameter[] parameters = baz.getParameters();
+		assertEquals(3, parameters.length);
+		assertEquals("int", parameters[0].getType());
+		assertEquals("primitive", parameters[0].getName());
+		assertEquals(0, parameters[0].getDescription().length());
+		assertEquals("java.lang.String", parameters[1].getType());
+		assertEquals("Argument description", parameters[1].getDescription());
 		assertEquals("java.lang.Integer baz(int, java.lang.String, org.tldgen.tags.DummyFunction)", baz.getSignature());
+		
+		// check empty function
+		Function baz2 = library.getFunction("baz2");
+		assertNull(baz2.getReturnDescription());
+		assertNotNull(baz2);
+		assertNull(baz2.getIcon());
+		assertNull(baz2.getExample());
+		assertNull(baz2.getDisplayName());
+		assertEquals("java.lang.Integer baz2(int, java.lang.String, org.tldgen.tags.DummyFunction)", baz2.getSignature());
 		
 		// check  annotated private function
 		assertNull(library.getFunction("hidden"));

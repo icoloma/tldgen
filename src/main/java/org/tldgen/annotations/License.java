@@ -1,4 +1,4 @@
-package org.tldgen;
+package org.tldgen.annotations;
 
 import java.io.IOException;
 import java.io.InputStream;

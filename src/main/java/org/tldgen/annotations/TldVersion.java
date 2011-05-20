@@ -1,4 +1,4 @@
-package org.tldgen.model;
+package org.tldgen.annotations;
 
 /**
  * The version of the TLD schema to use

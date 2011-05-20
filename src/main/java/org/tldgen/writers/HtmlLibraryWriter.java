@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 
 import org.apache.commons.io.IOUtils;
+import org.tldgen.DocletOptions;
 import org.tldgen.model.Library;
 import org.tldgen.model.Tag;
 import org.tldgen.util.ClasspathFileUtils;
@@ -23,9 +24,6 @@ public class HtmlLibraryWriter {
 	/** version of the YUI grid CSS file */
 	public static final String YUI_VERSION = "2.7.0";
 	
-	/** the location of the folder where HTML output will be written */
-	private String htmlFolder;
-	
 	private boolean formatOutput = true;
 	
 	//private static Log log = LogFactory.getLog(HtmlLibraryWriter.class);
@@ -35,9 +33,9 @@ public class HtmlLibraryWriter {
 	 * @param library the library to create HTML documentation
 	 * @throws IOException if an error occurred writing HTML file
 	 */
-	public void writeHtml(Library library) throws IOException {
-		DirectoryUtils.createHtmlFolder(htmlFolder);
-		createCss(library);
+	public void writeHtml(Library library, String htmlFolder) throws IOException {
+		DirectoryUtils.createFolder(htmlFolder);
+		createCss(library, htmlFolder);
 		HtmlIndexWriter indexWriter = new HtmlIndexWriter(htmlFolder + "/index.html");
 		indexWriter.setFormatOutput(formatOutput);
 		indexWriter.write(library);
@@ -60,7 +58,7 @@ public class HtmlLibraryWriter {
 	/**
 	 * Create the CSS files
 	 */
-	private void createCss(Library library) throws MalformedURLException, IOException {
+	private void createCss(Library library, String htmlFolder) throws MalformedURLException, IOException {
 		
 		// copy YUI CSS file
 		String yuiFolder = htmlFolder + "/yui-" + YUI_VERSION;
@@ -95,12 +93,12 @@ public class HtmlLibraryWriter {
 		}
 	}
 
-	public void setHtmlFolder(String htmlFolder) {
-		this.htmlFolder = htmlFolder;
-	}
-
 	public void setFormatOutput(boolean formatOutput) {
 		this.formatOutput = formatOutput;
+	}
+
+	public void setOptions(DocletOptions options) {
+		setFormatOutput(options.isFormatOutput());
 	}
 	
 }

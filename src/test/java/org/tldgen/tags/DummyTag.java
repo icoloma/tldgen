@@ -3,6 +3,8 @@ package org.tldgen.tags;
 import org.tldgen.annotations.Attribute;
 import org.tldgen.annotations.BodyContent;
 import org.tldgen.annotations.Tag;
+import org.tldgen.annotations.Variable;
+import org.tldgen.annotations.VariableScope;
 
 /** Tag javadoc */
 @Tag(
@@ -11,18 +13,22 @@ import org.tldgen.annotations.Tag;
 	dynamicAttributes=true,
 	icon="foo",
 	example="Tag example",
-	teiClass=DummyTei.class
+	teiClass=DummyTei.class,
+	variables={ @Variable(nameGiven="var1", declare=false, scope=VariableScope.AT_BEGIN) }
 )
+@SuppressWarnings("unused")
 public class DummyTag {
 	
 	/** foo javadoc 
 	 * @deprecated use example*/
-	@SuppressWarnings("unused")
 	@Attribute(name="foo", required=true, rtexprvalue=false)
 	private String foo;
 	
+	@Attribute(name="xxx")
+	@Variable
+	private String bar;
+	
 	/** hiddenFoo javadoc */
-	@SuppressWarnings("unused")
 	private String hiddenFoo;
 	
 	public void p() {

@@ -12,6 +12,7 @@ import com.sun.javadoc.AnnotationTypeDoc;
 import com.sun.javadoc.AnnotationValue;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.FieldDoc;
+import com.sun.javadoc.PackageDoc;
 import com.sun.javadoc.ProgramElementDoc;
 import com.sun.tools.javadoc.AnnotationDescImpl.ElementValuePairImpl;
 
@@ -44,7 +45,21 @@ public class JavadocUtils {
 	 * @return the annotation instance, if found. Null if  none
 	 */
 	public static AnnotationDesc getAnnotation(ProgramElementDoc doc, Class<? extends Annotation> annotationClass) {
-		for (AnnotationDesc annotation : doc.annotations()) {
+		return getAnnotation(doc.annotations(), annotationClass);
+	}
+	
+	/**
+	 * 
+	 * @param doc the package to inspect
+	 * @param annotationClass the annotation class to search for
+	 * @return the annotation instance, if found. Null if  none
+	 */
+	public static AnnotationDesc getAnnotation(PackageDoc doc, Class<? extends Annotation> annotationClass) {
+		return getAnnotation(doc.annotations(), annotationClass);
+	}
+	
+	private static AnnotationDesc getAnnotation(AnnotationDesc[] annotations, Class<? extends Annotation> annotationClass) {
+		for (AnnotationDesc annotation : annotations) {
 			if (isInstanceOf(annotation, annotationClass)) {
 				return annotation;
 			}
@@ -76,6 +91,21 @@ public class JavadocUtils {
 			values[i] = (String) annValues[i].value();
 		}
 		return values;
+	}
+	
+	/**
+	 * @return the AnnotationValue[] value of the specified attribute, the empty array if it's empty
+	 */
+	public static AnnotationDesc[] getAnnotationArrayAttribute(AnnotationDesc annotation, String name) {
+		AnnotationValue[] values = (AnnotationValue[]) getAttribute(annotation, name);
+		if (values == null) {
+			return null;
+		}
+		AnnotationDesc[] ad = new AnnotationDesc[values.length];
+		for (int i = 0; i < values.length; i++) {
+			ad[i] = (AnnotationDesc) values[i].value();
+		}
+		return ad;
 	}
 	
 	/**

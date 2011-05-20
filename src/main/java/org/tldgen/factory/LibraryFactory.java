@@ -6,12 +6,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.tldgen.model.Function;
 import org.tldgen.model.Library;
+import org.tldgen.model.LibrarySignature;
 import org.tldgen.model.Tag;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.MethodDoc;
-import com.sun.javadoc.RootDoc;
 
 /**
  * Creates a {@link Library} instance from the javadoc information
@@ -25,11 +25,10 @@ public class LibraryFactory {
 	/**
 	 * Create the intermediate memory model for the javadoc information
 	 */
-	public Library parse(RootDoc root) {
+	public Library parse(ClassDoc[] classes, LibrarySignature librarySignature) {
 		
-		log.info("Parsing TLD...");
-		Library library = new Library();
-		ClassDoc[] classes = root.classes();
+		log.info("Parsing " + librarySignature.getShortName() + "...");
+		Library library = new Library(librarySignature);
 		for (ClassDoc clazz : classes) {
         	Tag tag = parseTag(clazz);
         	if (tag != null) {

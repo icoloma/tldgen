@@ -1,5 +1,6 @@
 package org.tldgen.writers;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collection;
@@ -12,11 +13,15 @@ import javax.xml.stream.XMLStreamWriter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.tldgen.License;
+import org.tldgen.DocletOptions;
+import org.tldgen.annotations.TldVersion;
+import org.tldgen.annotations.VariableScope;
 import org.tldgen.model.Attribute;
 import org.tldgen.model.Function;
 import org.tldgen.model.Library;
+import org.tldgen.model.LibrarySignature;
 import org.tldgen.model.Tag;
+import org.tldgen.model.Variable;
 import org.tldgen.util.DirectoryUtils;
 
 /**
@@ -30,8 +35,7 @@ public class TldLibraryWriter extends AbstractWriter {
 
 	private XMLStreamWriter writer;
 	
-	/** TLD File license */
-	private License license;
+	private boolean doNotOverwrite;
 
 	private static Log log = LogFactory.getLog(TldLibraryWriter.class);
 
@@ -42,8 +46,12 @@ public class TldLibraryWriter extends AbstractWriter {
 	 * @param filename the name of the TLD file to create
 	 * @throws XMLStreamException if there is any problem writing the TLD 
 	 */
-	public void writeTLD(Library library, String filename) throws XMLStreamException, IOException {
+	public void writeTLD(Library library, String folder) throws XMLStreamException, IOException {
 
+		String filename = folder + "/" + library.getLibrarySignature().getShortName() + ".tld";
+		if (warnIfExists(filename) && doNotOverwrite) {
+			return;
+		}
 		log.info("Creating TLD file: " + filename);
 		
 		// write the TLD to memory
@@ -59,11 +67,23 @@ public class TldLibraryWriter extends AbstractWriter {
 		}
 		endTaglibElement();
 		
-		DirectoryUtils.createTldFolder(filename);
+		DirectoryUtils.createParentFolder(filename);
 		// format the generated XML and write to disk
 		formatAndWriteXml(buffer.toString(), filename);
 	}
 	
+	/**
+	 * Logs a warning if the output file/folder already exists
+	 * @param filename the file name to check the existence of
+	 * @return true if the given file exists, false otherwise
+	 */
+	private boolean warnIfExists(String filename) {
+		if (new File(filename).exists()) {
+			log.warn(filename + " already exists. It will " + (doNotOverwrite ? "NOT" : "") + " be overwritten");
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Start the &lt;taglib> element and write the TLD file header
@@ -71,22 +91,31 @@ public class TldLibraryWriter extends AbstractWriter {
 	 * @param library the library to create the TLD taglib element information
 	 */
 	private void startTaglibElement(Library library) throws XMLStreamException, IOException {
+		LibrarySignature signature = library.getLibrarySignature();
+		TldVersion tldVersion = signature.getVersion();
+		
 		log.debug("Writing TLD file header");
 		writer.writeStartDocument("UTF-8", "1.0");
-		String licenseContent = license.getLicenseHeader();
+		String licenseContent = signature.getLicense().getLicenseHeader();
 		if (!StringUtils.isEmpty(licenseContent)) {
 			writer.writeComment(licenseContent);
 		}
 		startElement("taglib");
 		writeAttribute("xmlns", "http://java.sun.com/xml/ns/javaee");
 		writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-		writeAttribute("xsi:schemaLocation", library.getVersion().getSchemaLocation());
-		writeAttribute("version", library.getVersion().getId());
-		writeElement("display-name",library.getDisplayName());
-		writeElement("tlib-version", library.getVersion().getId());
-		writeElement("short-name", library.getShortName());
-		writeElement("uri", library.getUri());
-
+		writeAttribute("xsi:schemaLocation", tldVersion.getSchemaLocation());
+		writeAttribute("version", tldVersion.getId());
+		writeElement("display-name",signature.getDisplayName());
+		writeElement("tlib-version", tldVersion.getId());
+		writeElement("short-name", signature.getShortName());
+		writeElement("uri", signature.getUri());
+		writeElement("description", signature.getDescription());
+		if (signature.getSmallIcon() != null || signature.getLargeIcon() != null) {
+			startElement("icon");
+			writeElement("small-icon", signature.getSmallIcon());
+			writeElement("large-icon", signature.getLargeIcon());
+			endElement();
+		}
 	}
 
 	/** 
@@ -128,6 +157,7 @@ public class TldLibraryWriter extends AbstractWriter {
 			writeElement("tei-class", tag.getTeiClass());
 			writeElement("body-content", tag.getBodyContent().getTldValue());
 			writeTagAttributes(tag.getName(), tag.getAttributes());
+			writeTagVariables(tag.getName(), tag.getVariables());
 			writeElement("dynamic-attributes", tag.isDynamicAttributes()? tag.isDynamicAttributes() : null);
 			writeElement("example", tag.getExample());
 			endElement();
@@ -147,7 +177,7 @@ public class TldLibraryWriter extends AbstractWriter {
 		for (Function function : functions) {
 			log.debug("Writing function '" + function.getName() + "'");
 			startElement("function");
-			writeCDataElement("description", function.getDescription());
+			writeCDataElement("description", function.getTldDescription());
 			writeElement("display-name", function.getDisplayName());
 			writeElement("icon", function.getIcon());
 			writeElement("name", function.getName());
@@ -160,14 +190,13 @@ public class TldLibraryWriter extends AbstractWriter {
 	}
 
 	/**
-	 * Write the Attributes info of the corresponding Tag
+	 * Write the Attributes info
 	 * 
 	 * @param attributes {@link Attribute} instances to write to the TLD
 	 * @throws XMLStreamException
 	 *             if error writing output stream
 	 */
 	private void writeTagAttributes(String tagName, Collection<Attribute> attributes) throws XMLStreamException {
-
 		for (Attribute attr : attributes) {
 			log.debug("Writing attribute '" + tagName + "." + attr.getName() + "'");
 			startElement("attribute");
@@ -176,6 +205,33 @@ public class TldLibraryWriter extends AbstractWriter {
 			writeElement("required", attr.isRequired()? attr.isRequired() : null);
 			writeElement("rtexprvalue", attr.isRtexprvalue()? attr.isRtexprvalue() : null);
 
+			endElement();
+		}
+	}
+
+	/**
+	 * Write the Variables info
+	 * 
+	 * @param variables {@link Variable} instances to write to the TLD
+	 * @throws XMLStreamException
+	 *             if error writing output stream
+	 */
+	private void writeTagVariables(String tagName, Collection<Variable> variables) throws XMLStreamException {
+		for (Variable var : variables) {
+			log.debug("Writing variable '" + tagName + "." + (var.getNameFromAttribute() == null? var.getNameGiven() : var.getNameFromAttribute()) + "'");
+			startElement("variable");
+			writeCDataElement("description", var.getDescription());
+			writeElement("name-given", var.getNameGiven());
+			writeElement("name-from-attribute", var.getNameFromAttribute());
+			if (var.getVariableClass() != null && !String.class.getName().equals(var.getVariableClass().qualifiedName())) {
+				writeElement("variable-class", var.getVariableClass());
+			}
+			if (!var.isDeclare()) {
+				writeElement("declare", var.isDeclare());
+			}
+			if (var.getScope() != null && var.getScope() != VariableScope.NESTED) {
+				writeElement("scope", var.getScope());
+			}
 			endElement();
 		}
 	}
@@ -226,9 +282,10 @@ public class TldLibraryWriter extends AbstractWriter {
 		writer.writeEndElement();
 	}
 	
-	public void setLicense(License license) {
-		this.license = license;
+	public void setOptions(DocletOptions options) {
+		setIndentSpaces(options.getIndentSpaces());
+		setFormatOutput(options.isFormatOutput());
+		this.doNotOverwrite = options.doNotOverwrite();
 	}
-	
 	
 }

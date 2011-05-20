@@ -50,4 +50,10 @@ public @interface Tag {
 	 * Optional subclass of {@link TagExtraInfo}
 	 */
 	Class<? extends TagExtraInfo> teiClass() default TagExtraInfo.class;
+	
+	/**
+	 * List of variables created by this Tag
+	 */
+	Variable[] variables() default {};
+	
 }
