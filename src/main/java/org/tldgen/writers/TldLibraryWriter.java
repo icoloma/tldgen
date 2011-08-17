@@ -43,7 +43,7 @@ public class TldLibraryWriter extends AbstractWriter {
 	 * Write the TLD file
 	 * 
 	 * @param library the library to create the TLD documentation
-	 * @param filename the name of the TLD file to create
+	 * @param folder the folder where the TLD file should be created 
 	 * @throws XMLStreamException if there is any problem writing the TLD 
 	 */
 	public void writeTLD(Library library, String folder) throws XMLStreamException, IOException {
