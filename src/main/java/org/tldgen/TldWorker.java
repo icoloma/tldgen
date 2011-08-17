@@ -35,7 +35,6 @@ public class TldWorker {
 	
 	/**
 	 * Create a TLD file with the contents of the TLD library
-	 * @param tldFilename the location of the TLD file to create
 	 */
 	public void createTLD(Library library, String tldFolder) {
 		TldLibraryWriter tldLibraryWriter = new TldLibraryWriter();

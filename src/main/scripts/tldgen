@@ -1,5 +1,5 @@
 #!/bin/bash
-DIRNAME=$(dirname $0)/..
+DIRNAME=$(dirname `readlink -f $0`)/..
 
 CP=`echo $DIRNAME/lib/*.jar $DIRNAME/*tools*.jar | sed -e 's/ /:/g'`
 
