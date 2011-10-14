@@ -131,8 +131,10 @@ public class TldDoclet {
 		librarySignature.setLargeIcon(getStringAttribute(libraryAnnotation, "largeIcon"));
 		librarySignature.setShortName(getStringAttribute(libraryAnnotation, "shortName"));
 		librarySignature.setUri(getStringAttribute(libraryAnnotation, "uri"));
-		librarySignature.setLicense(License.valueOf(getEnumAttribute(libraryAnnotation, "license")));
-		librarySignature.setVersion(TldVersion.valueOf(getEnumAttribute(libraryAnnotation, "version")));
+		license = getEnumAttribute(libraryAnnotation, "license");
+		librarySignature.setLicense(convertLicense());
+		version = getEnumAttribute(libraryAnnotation, "version");
+		librarySignature.setVersion(convertVersion());
 		return librarySignature;
 	}
 	
