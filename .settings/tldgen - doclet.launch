@@ -6,7 +6,9 @@
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.sun.tools.javadoc.Main"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-private -doclet org.tldgen.TldDoclet -sourcepath src/test/java -subpackages org.tldgen.tags -tldFile build/tldgen-core.tld -displayName &quot;Loom Core Tag Library&quot; -name loom -uri &quot;http://loom.extrema-sistemas.org/loom-core.tld&quot; -htmlFolder build -license APACHE"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="tldgen"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>
