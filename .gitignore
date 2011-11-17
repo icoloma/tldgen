@@ -2,3 +2,7 @@
 build/
 src/test/genlib/
 src/main/resources/META-INF/
+target
+.settings
+.classpath
+.project
