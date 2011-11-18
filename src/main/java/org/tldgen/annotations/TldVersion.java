@@ -27,4 +27,22 @@ public enum TldVersion {
 		return schemaLocation;
 	}
 	
+	@Override
+	public String toString() {
+		return id;
+	}
+
+	/** Convert from the given string to a value of this enum.
+	 * @param version the TLD version given as this enum name or TLD version or schema location
+	 * @return the TldVersion or null if the given string does not match any
+	 */
+	public static TldVersion convert(String version) {
+		if (version == null)
+			return null;
+		for (TldVersion v : values()) {
+			if (version.equals(v.name()) || version.equals(v.id) || version.equals(v.schemaLocation))
+				return v;
+		}
+		return null;
+	}
 }

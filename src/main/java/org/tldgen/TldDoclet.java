@@ -164,13 +164,14 @@ public class TldDoclet {
 	}
 	
 	private static TldVersion convertVersion() {
-		if (version == null || "2.0".equals(version)) {
+		if (version == null) {
 			return TldVersion.VERSION_20;
-		} else if ("2.1".equals(version)) {
-			return TldVersion.VERSION_21;
-		} else {
+		} 
+		TldVersion v = TldVersion.convert(version);
+		if (v == null) {
 			throw new IllegalArgumentException("Unknown TLD version. Available values are: '2.0', '2.1'");
 		}
+		return v;
 	}
 
 
