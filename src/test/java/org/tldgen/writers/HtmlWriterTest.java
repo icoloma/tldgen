@@ -9,8 +9,6 @@ import java.io.IOException;
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.tldgen.DocletOptions;
 import org.tldgen.mock.MockLibraryFactory;
 import org.tldgen.model.Library;
@@ -22,8 +20,6 @@ public class HtmlWriterTest {
 
 	private Library library;
 	
-	private static Logger log = LoggerFactory.getLogger(HtmlWriterTest.class);
-
 	@Before
 	public void initLibrary() {
 		library = new MockLibraryFactory().createLibrary("loom");

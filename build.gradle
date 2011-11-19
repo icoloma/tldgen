@@ -16,15 +16,13 @@ configurations {
 dependencies {
 	providedCompile	":tools",
 					"net.sourceforge.saxon:saxon:9.1.0.8",
-					"log4j:log4j:1.2.14",
-					"org.apache.geronimo.specs:geronimo-jsp_2.1_spec:1.0.1"
+					"ch.qos.logback:logback-classic:0.9.24",
+					"org.apache.geronimo.specs:geronimo-jsp_2.1_spec:1.0.1",
+					"org.slf4j:slf4j-api:1.6.1",
+			 		"commons-io:commons-io:1.4",
+					"commons-lang:commons-lang:2.4"
 
-	compile 		"commons-io:commons-io:1.4",
-					"commons-lang:commons-lang:2.4",
-					"org.slf4j:slf4j-api:1.6.1"
-
-	testCompile 	"ch.qos.logback:logback-classic:0.9.24",
-					"junit:junit:4.5"
+	testCompile 	"junit:junit:4.5"
 
 }
 

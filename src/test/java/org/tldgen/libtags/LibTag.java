@@ -6,6 +6,7 @@ import org.tldgen.annotations.Tag;
 @Tag
 public class LibTag {
 	
+	@SuppressWarnings("unused")
 	@Attribute
 	private String foo;
 	
