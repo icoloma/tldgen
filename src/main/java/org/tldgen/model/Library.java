@@ -68,5 +68,14 @@ public class Library {
 	public LibrarySignature getLibrarySignature() {
 		return librarySignature;
 	}
+
+	public void validate() {
+		if (librarySignature.getShortName() == null) {
+			throw new IllegalArgumentException("Attribute shortName for @Library annotation is mandatory.");
+		}
+		if (librarySignature.getUri() == null) {
+			throw new IllegalArgumentException("Attribute uri for library is mandatory.");
+		}
+	}
 	
 }

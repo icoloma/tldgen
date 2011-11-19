@@ -9,7 +9,7 @@ import org.tldgen.model.Library;
 
 public class HtmlFunctionWriter extends AbstractHtmlWriter {
 	
-	//private static Log log = LogFactory.getLog(HtmlFunctionWriter.class);
+	//private static Logger log = LoggerFactory.getLogger(HtmlFunctionWriter.class);
 	
 	public HtmlFunctionWriter(String htmlFile) throws IOException {
 		super(htmlFile);

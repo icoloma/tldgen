@@ -37,12 +37,14 @@ public enum TldVersion {
 	 * @return the TldVersion or null if the given string does not match any
 	 */
 	public static TldVersion convert(String version) {
-		if (version == null)
+		if (version == null) {
 			return null;
-		for (TldVersion v : values()) {
-			if (version.equals(v.name()) || version.equals(v.id) || version.equals(v.schemaLocation))
-				return v;
 		}
-		return null;
+		for (TldVersion v : values()) {
+			if (version.equals(v.id) || version.equals(v.schemaLocation)) {
+				return v;
+			}
+		}
+		throw new IllegalArgumentException("Unknown TLD version. Available values are: '2.0', '2.1'");
 	}
 }

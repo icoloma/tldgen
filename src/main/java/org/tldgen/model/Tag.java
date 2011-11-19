@@ -22,8 +22,8 @@ import java.util.TreeSet;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tldgen.annotations.BodyContent;
 import org.tldgen.annotations.ExcludeProperties;
 import org.tldgen.annotations.VariableScope;
@@ -62,7 +62,7 @@ public class Tag extends AbstractTldContainerElement {
 	/** An optional {@link TagExtraInfo} */
 	private String teiClass;
 	
-	private static Log log = LogFactory.getLog(Tag.class);
+	private static Logger log = LoggerFactory.getLogger(Tag.class);
 	
 	public static Tag createInstance(ClassDoc doc) {
     	Tag tag = new Tag();

@@ -15,8 +15,8 @@ import net.sf.saxon.TransformerFactoryImpl;
 import net.sf.saxon.event.SaxonOutputKeys;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 /**
@@ -32,7 +32,7 @@ public abstract class AbstractWriter {
 	/** true to prettify output */
 	private boolean formatOutput = true;
 
-	private static Log log = LogFactory.getLog(AbstractWriter.class);
+	private static Logger log = LoggerFactory.getLogger(AbstractWriter.class);
 	
 	static {
 		// set saxon as the default XSLT engine

@@ -4,8 +4,8 @@ import static org.tldgen.util.JavadocUtils.getAnnotation;
 import static org.tldgen.util.JavadocUtils.getStringAttribute;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.Doc;
@@ -30,7 +30,7 @@ public abstract class AbstractTldElement implements Comparable<AbstractTldElemen
 	/** null if javadoc deprecated annotation does not have any text (optional)*/
 	private String deprecatedMessage;
 	
-	private static Log log = LogFactory.getLog(AbstractTldElement.class);
+	private static Logger log = LoggerFactory.getLogger(AbstractTldElement.class);
 	
 	/**
 	 * Extract common elements from the doc data

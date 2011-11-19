@@ -26,7 +26,7 @@ public class HtmlLibraryWriter {
 	
 	private boolean formatOutput = true;
 	
-	//private static Log log = LogFactory.getLog(HtmlLibraryWriter.class);
+	//private static Logger log = LoggerFactory.getLogger(HtmlLibraryWriter.class);
 	
 	/**
 	 * 

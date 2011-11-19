@@ -2,8 +2,8 @@ package org.tldgen.factory;
 
 import static org.tldgen.util.JavadocUtils.getAnnotation;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tldgen.model.Function;
 import org.tldgen.model.Library;
 import org.tldgen.model.LibrarySignature;
@@ -20,7 +20,7 @@ import com.sun.javadoc.MethodDoc;
  */
 public class LibraryFactory {
 
-	private static Log log = LogFactory.getLog(LibraryFactory.class);
+	private static Logger log = LoggerFactory.getLogger(LibraryFactory.class);
 	
 	/**
 	 * Create the intermediate memory model for the javadoc information
@@ -37,6 +37,7 @@ public class LibraryFactory {
         		recollectFunctionData(clazz, library);
         	}
         }
+		library.validate();
 		return library;
 		
 	}

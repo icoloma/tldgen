@@ -11,7 +11,7 @@ import org.tldgen.model.Variable;
 
 public class HtmlTagWriter extends AbstractHtmlWriter {
 	
-	//private static Log log = LogFactory.getLog(HtmlLibraryWriter.class);
+	//private static Logger log = LoggerFactory.getLogger(HtmlLibraryWriter.class);
 	
 	public HtmlTagWriter(String htmlFile) throws IOException {
 		super(htmlFile);

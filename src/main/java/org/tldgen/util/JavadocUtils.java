@@ -3,8 +3,8 @@ package org.tldgen.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.AnnotationDesc.ElementValuePair;
@@ -26,7 +26,7 @@ public class JavadocUtils {
 	/** hack to get access to each annotation attribute name */
 	private static Field methAccessor;
 	
-	private static Log log = LogFactory.getLog(JavadocUtils.class);
+	private static Logger log = LoggerFactory.getLogger(JavadocUtils.class);
 	
 	static {
 		// hack: ElementValuePairImpl.meth is not accessible, and we need it to know about attribute names

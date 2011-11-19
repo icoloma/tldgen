@@ -8,7 +8,7 @@ import org.tldgen.model.LibrarySignature;
 
 public class HtmlIndexWriter extends AbstractHtmlWriter {
 	
-	//private static Log log = LogFactory.getLog(HtmlIndexWriter.class);
+	//private static Logger log = LoggerFactory.getLogger(HtmlIndexWriter.class);
 	
 	public HtmlIndexWriter(String htmlFile) throws IOException {
 		super(htmlFile);

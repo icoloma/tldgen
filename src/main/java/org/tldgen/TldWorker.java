@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javax.xml.stream.XMLStreamException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tldgen.factory.LibraryFactory;
 import org.tldgen.model.Library;
 import org.tldgen.model.LibrarySignature;
@@ -20,7 +20,7 @@ public class TldWorker {
 	
 	private DocletOptions options;
 	
-	private static Log log = LogFactory.getLog(TldWorker.class);
+	private static Logger log = LoggerFactory.getLogger(TldWorker.class);
 	
 	public TldWorker(DocletOptions options) {
 		this.options = options;

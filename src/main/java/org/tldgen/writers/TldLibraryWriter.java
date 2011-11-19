@@ -11,8 +11,8 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tldgen.DocletOptions;
 import org.tldgen.annotations.TldVersion;
 import org.tldgen.annotations.VariableScope;
@@ -37,7 +37,7 @@ public class TldLibraryWriter extends AbstractWriter {
 	
 	private boolean doNotOverwrite;
 
-	private static Log log = LogFactory.getLog(TldLibraryWriter.class);
+	private static Logger log = LoggerFactory.getLogger(TldLibraryWriter.class);
 
 	/**
 	 * Write the TLD file
@@ -48,11 +48,7 @@ public class TldLibraryWriter extends AbstractWriter {
 	 */
 	public void writeTLD(Library library, String folder) throws XMLStreamException, IOException {
 
-		String shortName = library.getLibrarySignature().getShortName();
-		if (shortName == null) {
-			throw new IllegalArgumentException("Attribute shortName for @Library annotation is mandatory.");
-		}
-		String filename = folder + "/" + shortName + ".tld";
+		String filename = folder + "/" + library.getLibrarySignature().getShortName() + ".tld";
 		if (warnIfExists(filename) && doNotOverwrite) {
 			return;
 		}
@@ -96,14 +92,6 @@ public class TldLibraryWriter extends AbstractWriter {
 	 */
 	private void startTaglibElement(Library library) throws XMLStreamException, IOException {
 		LibrarySignature signature = library.getLibrarySignature();
-		// check to see if URI and shortName are specified
-		if (signature.getShortName() == null) {
-			throw new IllegalArgumentException("Attribute shortName for library is mandatory.");
-		}
-		if (signature.getUri() == null) {
-			throw new IllegalArgumentException("Attribute uri for library is mandatory.");
-		}
-		
 		TldVersion tldVersion = signature.getVersion();
 		
 		log.debug("Writing TLD file header");
