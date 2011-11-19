@@ -8,25 +8,23 @@ repositories {
 }
 
 configurations {
+	all*.exclude module: 'commons-logging'
 	sources.exclude module: 'tools'
 	sources.exclude group: 'net.sf.saxon', module: 'saxon'
-	sources.exclude group: 'xmlunit', module: 'xmlunit'
 }
  
 dependencies {
 	providedCompile	":tools",
-					":saxon:9.1.0.8",
+					"net.sourceforge.saxon:saxon:9.1.0.8",
 					"log4j:log4j:1.2.14",
 					"org.apache.geronimo.specs:geronimo-jsp_2.1_spec:1.0.1"
 
 	compile 		"commons-io:commons-io:1.4",
 					"commons-lang:commons-lang:2.4",
-					"commons-logging:commons-logging:1.1.1"
+					"org.slf4j:slf4j-api:1.6.1"
 
-	testCompile 	"be.roam.hue:hue:1.1",
-					"junit:junit:4.5",
-					"net.sourceforge.htmlunit:htmlunit:2.5",
-					"xmlunit:xmlunit:1.2"
+	testCompile 	"ch.qos.logback:logback-classic:0.9.24",
+					"junit:junit:4.5"
 
 }
 
