@@ -4,6 +4,9 @@ import java.io.File;
 
 public class DirectoryUtils {
 	
+	/** Use only static methods. */
+	private DirectoryUtils() {}
+	
 	/**
 	 * Create a parent folder to the specified file name.
 	 * @param targetFile path of the file

@@ -7,6 +7,9 @@ import org.apache.commons.io.IOUtils;
 
 public class ClasspathFileUtils {
 
+	/** Use only static methods. */
+	private ClasspathFileUtils() {}
+	
 	/**
 	 * Read a file from the classpath and return its contents
 	 * @param location the path relative to the classpath

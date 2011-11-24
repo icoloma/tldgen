@@ -23,6 +23,9 @@ import com.sun.tools.javadoc.AnnotationDescImpl.ElementValuePairImpl;
  */
 public class JavadocUtils {
 
+	/** Use only static methods. */
+	private JavadocUtils() {}
+	
 	/** hack to get access to each annotation attribute name */
 	private static Field methAccessor;
 	

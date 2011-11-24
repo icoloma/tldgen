@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.io.FileUtils;
+import org.tldgen.util.ArrayUtilities;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.tldgen.annotations.License;
@@ -100,6 +101,13 @@ public class TldDoclet {
 					AnnotationDesc libraryAnnotation = JavadocUtils.getAnnotation(tagsPackage, org.tldgen.annotations.Library.class);
 					if (libraryAnnotation != null) {
 						library = worker.processLibrary(tagsPackage.allClasses(), createLibrarySignatureFromAnnotation(libraryAnnotation), tldFolder, htmlFolder);
+						
+						// if uri is not specified then use the reverse package name
+						if (library.getLibrarySignature().getUri() == null) {
+							library.getLibrarySignature().setUri("http://"
+									+ new String(ArrayUtilities.reverseTokens(tagsPackage.name().toCharArray(), '.')));
+						}
+						
 						result = true;
 					}
 				}
