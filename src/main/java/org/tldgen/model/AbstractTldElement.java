@@ -45,11 +45,19 @@ public abstract class AbstractTldElement implements Comparable<AbstractTldElemen
     	log.debug("Processing element " + name);
 		this.name = name;
     	this.description = StringUtils.isEmpty(doc.commentText())? null : doc.commentText();
-    	this.deprecated = doc.tags("@deprecated").length > 0 || getAnnotation(doc, Deprecated.class) != null;
-    	if (this.deprecated == true) {
-    		// calculate the value of the deprecated attribute
-			this.deprecatedMessage = doc.tags("@deprecated")[0].toString().replaceFirst("@deprecated:", "");
-		}
+    	if (doc.tags("@deprecated").length > 0) {
+    		this.deprecated = true;
+    		// calculate the value of the deprecated attribute from @deprecated JavaDoc tag
+    		this.deprecatedMessage = doc.tags("@deprecated")[0].toString().replaceFirst("@deprecated:", "");
+    	} else {
+    		AnnotationDesc a = getAnnotation(doc, Deprecated.class);
+    		if (a != null) {
+    			this.deprecated = true;
+    			// calculate the value of the deprecated attribute from @Deprecated annotation
+    			if (a.elementValues().length > 0)
+    				this.deprecatedMessage = a.elementValues()[0].value().toString();
+    		}
+    	}
 	}
 	
 	/** 
