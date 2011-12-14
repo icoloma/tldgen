@@ -23,15 +23,13 @@ public class LibraryAnnotationTest {
 	
 	@Before
 	public void setup() {
-		if (library == null) {
-			int result = Main.execute(new String[] {
-					"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.tldgen.libtags", "-tldFile", OUTPUT_FOLDER + "LibraryAnnotationTest-output/tldgen-test.tld",
-					"-htmlFolder", OUTPUT_FOLDER + "LibraryAnnotationTest-output"
-			});
-			assertEquals("The javadoc command did not exit successfully. Check the system log for details", 0, result);
-			library = TldDoclet.library;
-			assertNotNull(library);
-		}
+		int result = Main.execute(new String[] {
+				"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.tldgen.libtags", "-tldFile", OUTPUT_FOLDER + "LibraryAnnotationTest-output/tldgen-test.tld",
+				"-htmlFolder", OUTPUT_FOLDER + "LibraryAnnotationTest-output"
+		});
+		assertEquals("The javadoc command did not exit successfully. Check the system log for details", 0, result);
+		library = TldDoclet.library;
+		assertNotNull(library);
 	}
 	
 	@Test

@@ -1,0 +1,22 @@
+TLDgen is using Sonatype OSS Maven repository. This is a short summary of the deployment process into maven.
+
+Deployment steps
+================
+Add the following lines to the Maven settings file (usually <user home>/.m2/settings.xml)
+<settings>
+   ...
+   <servers>
+      <server>
+         <id>sonatype-nexus-staging</id>
+         <username>your-sonatype-user</username>
+         <password>your-sonatype-password</password>
+      </server>
+   </servers>
+</settings>
+
+Run mvn clean deploy
+Follow the guide[1] from step 8 to release the stage artifacts.
+
+[1] https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
+[2] http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/
+[3] http://maven.apache.org/guides/mini/guide-central-repository-upload.html
