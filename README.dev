@@ -22,7 +22,7 @@ Deployment steps
 mvn assembly:assembly
 
 5. To create version on the repository, execute:
-git push origin <version_name>
+git push origin master:<version_name>
 
 6. Edit pom.xml and switch to the new SNAPSHOT version.
 
