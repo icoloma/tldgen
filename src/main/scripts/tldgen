@@ -1,7 +1,7 @@
 #!/bin/bash
 DIRNAME=$(dirname `readlink -f $0`)/..
 
-CP=`echo $DIRNAME/lib/*.jar $DIRNAME/*tools*.jar | sed -e 's/ /:/g'`
+CP=`echo $DIRNAME/lib/*.jar $DIRNAME/*.jar | sed -e 's/ /:/g'`
 
 COMMAND="javadoc -docletpath $CP -private -doclet org.tldgen.TldDoclet"
 

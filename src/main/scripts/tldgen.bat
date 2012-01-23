@@ -5,7 +5,7 @@ set DIRNAME=%~dp0%
 
 set TLDGEN_HOME=%DIRNAME%..
 
-for %%a in (%TLDGEN_HOME%\tldgen-tools-*.jar) do (
+for %%a in (%TLDGEN_HOME%\tldgen-*.jar) do (
 	set CP=%%a
 )
 for %%a in (%TLDGEN_HOME%\lib\*.jar) do (

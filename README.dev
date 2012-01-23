@@ -2,7 +2,7 @@ TLDgen is using Sonatype OSS Maven repository. This is a short summary of the de
 
 Deployment steps
 ================
-Add the following lines to the Maven settings file (usually <user home>/.m2/settings.xml)
+1. Add the following lines to the Maven settings file (usually <user home>/.m2/settings.xml)
 <settings>
    ...
    <servers>
@@ -14,8 +14,21 @@ Add the following lines to the Maven settings file (usually <user home>/.m2/sett
    </servers>
 </settings>
 
-Run mvn clean deploy
-Follow the guide[1] from step 8 to release the stage artifacts.
+2. Run mvn clean deploy
+
+3. Connect to https://oss.sonatype.org to promote and release the new version.
+
+4. Execute and upload the zip file to the project home page:
+mvn assembly:assembly
+
+5. To create version on the repository, execute:
+git push origin <version_name>
+
+6. Edit pom.xml and switch to the new SNAPSHOT version.
+
+7. git commit, git push
+
+Extra docs:
 
 [1] https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide
 [2] http://www.sonatype.com/people/2010/01/how-to-generate-pgp-signatures-with-maven/

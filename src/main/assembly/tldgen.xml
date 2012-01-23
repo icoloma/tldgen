@@ -1,13 +1,13 @@
 <assembly>
-	<id>bin</id>
+	<id>release</id>
 	<formats>
 		<format>zip</format>
 	</formats>
 	<fileSets>
 		<fileSet>
 			<includes>
-				<include>README*</include>
-				<include>LICENSE*</include>
+				<include>README</include>
+				<include>LICENSE</include>
 			</includes>
 		</fileSet>
 		<fileSet>
@@ -20,10 +20,6 @@
 			<includes>
 				<include>*.jar</include>
 			</includes>
-		</fileSet>
-		<fileSet>
-			<directory>${project.build.directory}/apidocs</directory>
-			<outputDirectory>docs/javadoc</outputDirectory>
 		</fileSet>
 	</fileSets>
 	<dependencySets>
