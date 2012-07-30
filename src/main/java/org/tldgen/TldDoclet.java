@@ -141,7 +141,7 @@ public class TldDoclet {
 		librarySignature.setUri(getStringAttribute(libraryAnnotation, "uri"));
 		license = getEnumAttribute(libraryAnnotation, "license");
 		librarySignature.setLicense(convertLicense());
-		version = getEnumAttribute(libraryAnnotation, "version");
+		version = TldVersion.valueOf(getEnumAttribute(libraryAnnotation, "version")).getId();
 		librarySignature.setVersion(convertVersion());
 		return librarySignature;
 	}

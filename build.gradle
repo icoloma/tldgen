@@ -1,23 +1,47 @@
-apply from: "$sharedLocation/extrema.gradle"
-apply from: "$sharedLocation/pgp.gradle"
+/**
+	Half-proved gradle configuration.
+	This should create the eclipse configuration just fine, but the following features are untested:
 
-project.version = tldgenVersion
+	* jar generation
+	* upload to maven central
+	* Zip distribution file
+
+	icoloma:
+	I am leaving the commented (original) versions for the moment where I save some time to give it a look
+
+*/
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'eclipse'
+apply from: 'https://raw.github.com/icoloma/gradle-plugins/master/providedCompile.gradle'
+apply from: 'https://raw.github.com/icoloma/gradle-plugins/master/artifacts.gradle'
+
+project.version='1.4-SNAPSHOT'
+project.group='org.extrema-sistemas'
 
 repositories {
 	flatDir name: 'jdk-home', dirs: System.properties['java.home'] + "/../lib/"
 }
 
-configurations {
-	all*.exclude module: 'commons-logging'
-	sources.exclude module: 'tools'
-	sources.exclude group: 'net.sf.saxon', module: 'saxon'
+repositories {
+    if (project.hasProperty('nexus')) {
+        mavenRepo name: 'nexus', url: nexus
+    }
+    mavenCentral()
 }
- 
+
+configurations {
+    all*.exclude module: 'commons-logging'
+}
+
 dependencies {
+
 	providedCompile	":tools",
 					"net.sourceforge.saxon:saxon:9.1.0.8",
 					"ch.qos.logback:logback-classic:0.9.24",
-					"org.apache.geronimo.specs:geronimo-jsp_2.1_spec:1.0.1",
+					"javax.servlet.jsp:jsp-api:2.1",
 					"org.slf4j:slf4j-api:1.6.1",
 			 		"commons-io:commons-io:1.4",
 					"commons-lang:commons-lang:2.4"
@@ -25,6 +49,94 @@ dependencies {
 	testCompile 	"junit:junit:4.5"
 
 }
+
+artifacts {
+    archives jar
+}
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+ 
+        pom.project {
+            name project.name
+            packaging 'jar'
+            description 'TLD and HTML code generation from javadoc annotations.'
+            url 'http://code.google.com/p/tldgen/'
+            scm {
+                url 'https://code.google.com/p/tldgen/'
+                connection "scm:git:https://code.google.com/p/tldgen/"
+                developerConnection "scm:git:https://code.google.com/p/tldgen/"
+            }
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            developers {
+               developer {
+                   id 'icoloma'
+                   name 'Nacho Coloma'
+               }
+               developer {
+                   id 'ccoloma'
+                   name 'Carlos Coloma'
+                   email 'ccescribano@gmail.com'
+               }
+               developer {
+                   id 'beradrian'
+                   name 'Adrian Ber'
+                   email 'beradrian@gmail.com'
+               }
+
+           }
+        }
+        uniqueVersion = true // 'false' failing due to http://jira.codehaus.org/browse/GRADLE-629
+        configuration = configurations.archives
+        
+        snapshotRepository(url: 'http://oss.sonatype.org/content/repositories/snapshots') {
+            authentication(userName: sonatypeUsername, password: sonatypePassword)
+        }
+        
+        repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+            authentication(userName: sonatypeUsername, password: sonatypePassword)
+        }
+    }
+}
+
+task 'zipDist'(type: Zip, dependsOn: javadoc) {
+	into("$archivesBaseName-${version}") {
+		from(libsDir)
+		from(projectDir) {
+			include 'README'
+			include 'LICENSE'
+		}
+		from(configurations.runtime.resolve()) {
+			into 'lib'
+		} 
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 
 task jar(type: Jar, overwrite: true, dependsOn: compileJava, description: "Creates tldgen.jar") {
 	from(sourceSets.main.classesDir) {
@@ -58,3 +170,5 @@ task zip(type: Zip, dependsOn: [jar, sourcesJar, javadocJar, toolsJar]) {
 		} 
 	}
 }
+*/
+
