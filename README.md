@@ -1,10 +1,8 @@
 About TLDGen
 ===
-TLDGen is an extremely useful tool if you're working with JSP and custom tag and functions. It automatically generates for you the TLD(Tag Library Descriptor) files. The TLD files are comprising of the library definition and custom tags and function definitions.
+TLDGen is an extremely useful tool if you're working with JSP and custom tag and functions. It automatically generates the TLD (Tag Library Descriptor) files from annotations in your Java classes.And the nice part is that you don't need TLDGen at runtime. 
 
-If you define the custom tags in Java classes and functions with Java static methods, it does make sense to have the configuration and code in the same place. This way you will get rid of the update hassles. So using TLDGen you are able to annotate the classes, methods and packages to automatically generate the TLD. And the nice part is that you don't need TLDGen at runtime. 
-
-You are able to use TLDGen in three ways: from the command line, from Ant and from Maven. This way, you are able to easily integrate TLDGen into your build process.
+You can use TLDGen in three ways: from the command line, ant or maven. It can also generate HTML documentation for your TLD [See example](http://loom.sourceforge.net/docs/loom-core/tlddoc/form.html).
 
 Why
 ===
@@ -20,9 +18,7 @@ Java web applications based on JSP are traditionally bound to a great amount of 
 <li>There is no way to document <b>deprecated behavior</b>.</li>
 </ul>
 
-TLDGen is a java library and a command line tool that generates the TLD file and HTML documentation from Java annotations. An example of generated HTML can be checked out [here](http://loom.sourceforge.net/docs/loom-core/tlddoc/form.html).
-
-It can be used to create TLD files from scratch or to upgrade your existing web application to remove the hassle of maintaining these files by hand. In both cases the procedure is the same:
+It can be used to create TLD files from scratch or to upgrade your existing web application to remove the hassle of maintaining these files by hand. In both cases the procedure is the same.
 
 Using tldgen annotations
 ===
@@ -96,7 +92,7 @@ tldgen
   -htmlFolder build/docs/tlddoc
 ```
 
-That's it. To get a list of available commands-line arguments, execute "tldgen --help".
+That's it. To get a list of available command-line arguments, execute "tldgen --help".
 
 Ant usage
 ===
@@ -114,7 +110,7 @@ Ant usage
   </javadoc>
 ```
 
-The options are following Maven conventions, but you can easily adapt them for your own needs. The `libraries` set must contain the TLDGen jar.
+This example is following Maven conventions, but you can easily adapt them for your own needs. The `libraries` set must contain the TLDGen jar.
 
 Maven usage
 ===
