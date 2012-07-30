@@ -14,7 +14,11 @@ Deployment steps
    </servers>
 </settings>
 
-2. Run mvn clean deploy
+2. Run either 
+
+mvn clean deploy
+or 
+mvn eclipse:eclipse
 
 3. Connect to https://oss.sonatype.org to promote and release the new version.
 
