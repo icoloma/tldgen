@@ -20,7 +20,7 @@ public class HtmlFunctionWriter extends AbstractHtmlWriter {
 	 * @param library the library data model to process
 	 */
 	public void write(Library library) throws IOException{
-		startDocument("Loom Functions");
+		startDocument("Functions");
 		startBody();
 		
 		printHeader(1, "Functions");
