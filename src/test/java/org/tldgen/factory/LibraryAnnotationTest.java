@@ -24,6 +24,7 @@ public class LibraryAnnotationTest {
 	
 	@Before
 	public void setup() {
+		TldDoclet.reset();
 		int result = Main.execute(new String[] {
 				"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.tldgen.libtags", "-tldFile", OUTPUT_FOLDER + "LibraryAnnotationTest-output/tldgen-test.tld",
 				"-htmlFolder", OUTPUT_FOLDER + "LibraryAnnotationTest-output"

@@ -260,6 +260,15 @@ public class TldDoclet {
 	public static int optionLength(String option) {
 		return options.contains("-" + option)? 0 : 2; 
 	}
+
+	public static void reset() {
+		displayName = version = name = uri = indentSpaces = license = formatOutput = null;
+		library = null;
+		
+		htmlFolder = DEFAULT_HTML_FOLDER;
+		tldFolder = DEFAULT_TLD_FOLDER;
+		
+	}
 	
 
 }
