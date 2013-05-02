@@ -41,8 +41,6 @@ public class TldWorker {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
-		} finally {
-			tldLibraryWriter.close();
 		}
 	}
 	

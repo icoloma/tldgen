@@ -56,17 +56,22 @@ public class TldLibraryWriter extends AbstractWriter {
 		
 		// write the TLD to memory
 		StringWriter buffer = new StringWriter();
-		writer = XMLOutputFactory.newInstance().createXMLStreamWriter(buffer);
-		startTaglibElement(library);
-		if (library.getTags() != null) {
-			writeTags(library.getTags());
-		}
+		try {
+			writer = XMLOutputFactory.newInstance().createXMLStreamWriter(buffer);
+			startTaglibElement(library);
+			if (library.getTags() != null) {
+				writeTags(library.getTags());
+			}
 
-		if (library.getFunctions() != null) {
-			writeFunctions(library.getFunctions());
+			if (library.getFunctions() != null) {
+				writeFunctions(library.getFunctions());
+			}
+			endTaglibElement();
+		} finally {
+			if (writer != null) {
+				writer.close();
+			}
 		}
-		writer.flush();
-		endTaglibElement();
 		
 		DirectoryUtils.createParentFolder(filename);
 		// format the generated XML and write to disk
@@ -124,22 +129,6 @@ public class TldLibraryWriter extends AbstractWriter {
 	 */
 	private void endTaglibElement() throws XMLStreamException {
 		endElement();
-	}
-
-	/**
-	 * Close the output file
-	 * 
-	 * @throws IllegalStateException
-	 *             if closing a output stream that it is not opened
-	 */
-	public void close() {
-		try {
-			if (writer != null) {
-				writer.close();
-			}
-		} catch (XMLStreamException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	/**
