@@ -65,6 +65,7 @@ public class TldLibraryWriter extends AbstractWriter {
 		if (library.getFunctions() != null) {
 			writeFunctions(library.getFunctions());
 		}
+		writer.flush();
 		endTaglibElement();
 		
 		DirectoryUtils.createParentFolder(filename);
