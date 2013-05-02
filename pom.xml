@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.extrema-sistemas</groupId>
   <artifactId>tldgen</artifactId>
-  <version>1.4.1</version>
+  <version>1.4.2</version>
   <name>TLDGen</name>
   <description>TLD Generator from Java annotations</description>
   <url>http://code.google.com/p/tldgen/</url>
