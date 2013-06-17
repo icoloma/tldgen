@@ -9,5 +9,20 @@ public class LibTag {
 	@SuppressWarnings("unused")
 	@Attribute
 	private String foo;
-	
+
+
+    @SuppressWarnings("unused")
+    @Attribute
+    private int fooInt;
+
+    @Attribute
+    private void setAnInt(int anInt) {
+
+    }
+
+    @Attribute
+    private void setABoolean(Boolean aBoolean) {
+
+    }
+
 }

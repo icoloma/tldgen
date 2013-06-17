@@ -1,17 +1,13 @@
 package org.tldgen.factory;
 
-import static org.tldgen.util.JavadocUtils.getAnnotation;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.tldgen.model.Function;
-import org.tldgen.model.Library;
-import org.tldgen.model.LibrarySignature;
-import org.tldgen.model.Tag;
-
 import com.sun.javadoc.AnnotationDesc;
 import com.sun.javadoc.ClassDoc;
 import com.sun.javadoc.MethodDoc;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.tldgen.model.*;
+
+import static org.tldgen.util.JavadocUtils.getAnnotation;
 
 /**
  * Creates a {@link Library} instance from the javadoc information
@@ -31,9 +27,12 @@ public class LibraryFactory {
 		Library library = new Library(librarySignature);
 		for (ClassDoc clazz : classes) {
         	Tag tag = parseTag(clazz);
+            Listener listener = parseListener(clazz);
         	if (tag != null) {
         		library.add(tag);
-        	} else {
+        	} else if(listener != null) {
+                 library.addListener(listener);
+            } else {
         		recollectFunctionData(clazz, library);
         	}
         }
@@ -49,6 +48,15 @@ public class LibraryFactory {
 	private Tag parseTag(ClassDoc doc) {
 		return !doc.isAbstract() && getAnnotation(doc, org.tldgen.annotations.Tag.class) != null? Tag.createInstance(doc) : null;
 	}
+
+    /**
+     * Parse the Listener from this class annotation
+     * @param doc
+     * @return the Listener class parsed for the provided class, null if none
+     */
+    private Listener parseListener(ClassDoc doc) {
+        return !doc.isAbstract() && getAnnotation(doc, org.tldgen.annotations.Listener.class) != null? Listener.createInstance(doc) : null;
+    }
 
 	
 	/**

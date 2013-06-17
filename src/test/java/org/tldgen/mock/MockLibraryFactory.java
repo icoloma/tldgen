@@ -2,13 +2,7 @@ package org.tldgen.mock;
 
 import org.tldgen.annotations.BodyContent;
 import org.tldgen.annotations.License;
-import org.tldgen.model.Attribute;
-import org.tldgen.model.Function;
-import org.tldgen.model.FunctionParameter;
-import org.tldgen.model.Library;
-import org.tldgen.model.LibrarySignature;
-import org.tldgen.model.Tag;
-import org.tldgen.model.Variable;
+import org.tldgen.model.*;
 
 /**
  * Creates mock Library data for testing
@@ -82,6 +76,10 @@ public class MockLibraryFactory {
 		function.setClazz("org.tldgen.targetfunctions.FunctionSampleUtil");
 		function.setReturnDescription("Returns true if the argument is 42, false otherwise. Go figure.");
 		library.add(function);
+
+        Listener listener = new Listener();
+        listener.setListenerClass("org.tldgen.listeners.DummyListener");
+        library.addListener(listener);
 
 		return library;
 	}

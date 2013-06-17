@@ -21,6 +21,7 @@ import java.util.TreeSet;
 
 import javax.servlet.jsp.tagext.TagExtraInfo;
 
+import com.sun.javadoc.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,14 +29,6 @@ import org.tldgen.annotations.BodyContent;
 import org.tldgen.annotations.ExcludeProperties;
 import org.tldgen.annotations.VariableScope;
 import org.tldgen.util.JavadocUtils;
-
-import com.sun.javadoc.AnnotationDesc;
-import com.sun.javadoc.ClassDoc;
-import com.sun.javadoc.Doc;
-import com.sun.javadoc.FieldDoc;
-import com.sun.javadoc.MemberDoc;
-import com.sun.javadoc.MethodDoc;
-import com.sun.javadoc.ProgramElementDoc;
 
 /**
  * Information of a tag class
@@ -197,8 +190,30 @@ public class Tag extends AbstractTldContainerElement {
 		attribute.setRequired(required != null? required : false);
 		Boolean rtexprvalue = getBooleanAttribute(annotation, "rtexprvalue");
 		attribute.setRtexprvalue((rtexprvalue != null)? rtexprvalue : true);
+        attribute.setType(parseAttributeType(doc));
 		return attribute;
 	}
+
+    private static String parseAttributeType(MemberDoc doc) {
+
+        Type type = null;
+
+        if(doc instanceof FieldDoc) {
+            FieldDoc fieldDoc = (FieldDoc) doc;
+            type = fieldDoc.type();
+        }
+        if(doc instanceof MethodDoc) {
+            MethodDoc methodDoc = (MethodDoc) doc;
+            Parameter[] parameter = methodDoc.parameters();
+            if(parameter.length == 1)
+                type = parameter[0].type();
+        }
+
+        if(type == null || type.isPrimitive())
+            return "java.lang.String";
+        else
+            return type.qualifiedTypeName();
+    }
 	
 	@Override
 	protected String calculateDefaultElementName(Doc doc) {
