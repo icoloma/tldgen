@@ -61,9 +61,9 @@ public class TldLibraryWriter extends AbstractWriter {
 				writeFunctions(library.getFunctions());
 			}
 
-            if(library.getListeners() != null) {
-                writeListeners(library.getListeners());
-            }
+			if(library.getListeners() != null) {
+				writeListeners(library.getListeners());
+			}
 
 			endTaglibElement();
 		} finally {
@@ -178,21 +178,21 @@ public class TldLibraryWriter extends AbstractWriter {
 
 	}
 
-    /**
-     * Write the listeners to the tld file
-     *
-     * @param listeners the listeners to include in the tld file
-     * @throws XMLStreamException on error writing to out stream
-     */
-    private void writeListeners(Set<Listener> listeners)
-            throws XMLStreamException {
-        for(Listener listener : listeners) {
-            log.debug("writing Listener for '"+listener.getListenerClass() +"'");
-            startElement("listener");
-            writeElement("listener-class", listener.getListenerClass());
-            endElement();
-        }
-    }
+	/**
+	 * Write the listeners to the tld file
+	 *
+	 * @param listeners the listeners to include in the tld file
+	 * @throws XMLStreamException on error writing to out stream
+	 */
+	private void writeListeners(Set<Listener> listeners)
+		throws XMLStreamException {
+		for(Listener listener : listeners) {
+			log.debug("writing Listener for '"+listener.getListenerClass() +"'");
+			startElement("listener");
+			writeElement("listener-class", listener.getListenerClass());
+			endElement();
+		}
+	}
 	/**
 	 * Write the Attributes info
 	 * 
@@ -208,7 +208,7 @@ public class TldLibraryWriter extends AbstractWriter {
 			writeElement("name", attr.getName());
 			writeElement("required", attr.isRequired()? attr.isRequired() : null);
 			writeElement("rtexprvalue", attr.isRtexprvalue()? attr.isRtexprvalue() : null);
-            writeElement("type", attr.getType());
+			writeElement("type", attr.getType());
 
 			endElement();
 		}

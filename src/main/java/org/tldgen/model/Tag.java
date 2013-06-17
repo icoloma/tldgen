@@ -104,8 +104,8 @@ public class Tag extends AbstractTldContainerElement {
 			tag.postProcessElement(doc, annotation);
 		}
     	
-    	// add annotated attributes
-    	for (FieldDoc fieldDoc : doc.fields()) {
+		// add annotated attributes
+		for (FieldDoc fieldDoc : doc.fields()) {
 			Attribute attribute = addMember(fieldDoc, tag, excludeProperties);
 			if (attribute != null) {
 				AnnotationDesc variableAnnotation = getAnnotation(fieldDoc, org.tldgen.annotations.Variable.class);
@@ -115,14 +115,13 @@ public class Tag extends AbstractTldContainerElement {
 			}
 			
 		}
-    	
-    	// add annotated setter methods
-    	for (MethodDoc methodDoc : doc.methods()) {
+
+		// add annotated setter methods
+		for (MethodDoc methodDoc : doc.methods()) {
 			addMember(methodDoc, tag, excludeProperties);
-    	}
-    	
+		}
 	}
-	
+
 	private static Attribute addMember(MemberDoc doc, Tag tag, Set<String> excludeProperties) {
 		Attribute attribute = parseAttribute(doc);
 		if (attribute != null) {
@@ -194,26 +193,23 @@ public class Tag extends AbstractTldContainerElement {
 		return attribute;
 	}
 
-    private static String parseAttributeType(MemberDoc doc) {
-
-        Type type = null;
-
-        if(doc instanceof FieldDoc) {
-            FieldDoc fieldDoc = (FieldDoc) doc;
-            type = fieldDoc.type();
-        }
-        if(doc instanceof MethodDoc) {
-            MethodDoc methodDoc = (MethodDoc) doc;
-            Parameter[] parameter = methodDoc.parameters();
-            if(parameter.length == 1)
-                type = parameter[0].type();
-        }
-
-        if(type == null || type.isPrimitive())
-            return "java.lang.String";
-        else
-            return type.qualifiedTypeName();
-    }
+	private static String parseAttributeType(MemberDoc doc) {
+		Type type = null;
+		if(doc instanceof FieldDoc) {
+			FieldDoc fieldDoc = (FieldDoc) doc;
+			type = fieldDoc.type();
+		}
+		if(doc instanceof MethodDoc) {
+			MethodDoc methodDoc = (MethodDoc) doc;
+			Parameter[] parameter = methodDoc.parameters();
+			if(parameter.length == 1)
+				type = parameter[0].type();
+		}
+		if(type == null || type.isPrimitive())
+			return "java.lang.String";
+		else
+			return type.qualifiedTypeName();
+	}
 	
 	@Override
 	protected String calculateDefaultElementName(Doc doc) {

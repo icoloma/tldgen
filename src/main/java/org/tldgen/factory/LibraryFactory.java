@@ -27,15 +27,15 @@ public class LibraryFactory {
 		Library library = new Library(librarySignature);
 		for (ClassDoc clazz : classes) {
         	Tag tag = parseTag(clazz);
-            Listener listener = parseListener(clazz);
+        	Listener listener = parseListener(clazz);
         	if (tag != null) {
         		library.add(tag);
         	} else if(listener != null) {
-                 library.addListener(listener);
-            } else {
+        		library.addListener(listener);
+        	} else {
         		recollectFunctionData(clazz, library);
         	}
-        }
+		}
 		library.validate();
 		return library;
 		
@@ -49,14 +49,14 @@ public class LibraryFactory {
 		return !doc.isAbstract() && getAnnotation(doc, org.tldgen.annotations.Tag.class) != null? Tag.createInstance(doc) : null;
 	}
 
-    /**
-     * Parse the Listener from this class annotation
-     * @param doc
-     * @return the Listener class parsed for the provided class, null if none
-     */
-    private Listener parseListener(ClassDoc doc) {
-        return !doc.isAbstract() && getAnnotation(doc, org.tldgen.annotations.Listener.class) != null? Listener.createInstance(doc) : null;
-    }
+	/**
+	 * Parse the Listener from this class annotation
+	 * @param doc
+	 * @return the Listener class parsed for the provided class, null if none
+	 */
+	private Listener parseListener(ClassDoc doc) {
+		return !doc.isAbstract() && getAnnotation(doc, org.tldgen.annotations.Listener.class) != null? Listener.createInstance(doc) : null;
+	}
 
 	
 	/**

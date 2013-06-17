@@ -15,12 +15,12 @@ public class Library {
 	
 	/** list of tags in this library */
 	private Set<Tag> tags = new TreeSet<Tag>();
-	
+
 	/** list of functions in this library */
 	private Set<Function> functions = new TreeSet<Function>();
 
-    /** list of listeners in this library */
-    private Set<Listener> listeners = new TreeSet<Listener>();
+	/** list of listeners in this library */
+	private Set<Listener> listeners = new TreeSet<Listener>();
 
 	public Library(LibrarySignature librarySignature) {
 		this.librarySignature = librarySignature;
@@ -52,19 +52,19 @@ public class Library {
 		return null;
 	}
 
-    /**
-     * Convenience method to get a listener by class name
-     *
-     * @return the listener with the matching class name, null if none was found
-     */
-    public Listener getListener(String name) {
-        for (Listener listener : listeners) {
-            if (name.equals(listener.getListenerClass())) {
-                return listener;
-            }
-        }
-        return null;
-    }
+	/**
+	 * Convenience method to get a listener by class name
+	 *
+	 * @return the listener with the matching class name, null if none was found
+	 */
+	public Listener getListener(String name) {
+		for (Listener listener : listeners) {
+			if (name.equals(listener.getListenerClass())) {
+				return listener;
+			}
+		}
+		return null;
+	}
 	
 	public void add(Tag tag) {
 		tags.add(tag);
@@ -74,9 +74,9 @@ public class Library {
 		functions.add(function);
 	}
 
-    public void addListener(Listener listener) {
-        listeners.add(listener);
-    }
+	public void addListener(Listener listener) {
+		listeners.add(listener);
+	}
 
 	public Set<Tag> getTags() {
 		return tags;
@@ -86,11 +86,11 @@ public class Library {
 		return functions;
 	}
 
-    public Set<Listener> getListeners() {
-        return listeners;
-    }
+	public Set<Listener> getListeners() {
+		return listeners;
+	}
 
-    public LibrarySignature getLibrarySignature() {
+	public LibrarySignature getLibrarySignature() {
 		return librarySignature;
 	}
 
