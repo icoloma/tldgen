@@ -4,6 +4,8 @@ TLDGen is an extremely useful tool if you're working with JSP and custom tag and
 
 You can use TLDGen in three ways: from the command line, ant or maven. It can also generate HTML documentation for your TLD [See example](http://loom.sourceforge.net/docs/loom-core/tlddoc/form.html).
 
+[![Analytics](https://ga-beacon.appspot.com/UA-3159223-5/icoloma/tldgen)](https://github.com/icoloma/tldgen)
+
 Why
 ===
 
