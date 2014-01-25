@@ -1,13 +1,23 @@
 package org.tldgen.model;
 
-import static org.tldgen.util.JavadocUtils.getAnnotation;
-import static org.tldgen.util.JavadocUtils.getAnnotationArrayAttribute;
-import static org.tldgen.util.JavadocUtils.getBooleanAttribute;
-import static org.tldgen.util.JavadocUtils.getClassAttribute;
-import static org.tldgen.util.JavadocUtils.getEnumAttribute;
-import static org.tldgen.util.JavadocUtils.getStringArrayAttribute;
-import static org.tldgen.util.JavadocUtils.getStringAttribute;
+import com.sun.javadoc.AnnotationDesc;
+import com.sun.javadoc.ClassDoc;
+import com.sun.javadoc.Doc;
+import com.sun.javadoc.FieldDoc;
+import com.sun.javadoc.MemberDoc;
+import com.sun.javadoc.MethodDoc;
+import com.sun.javadoc.Parameter;
+import com.sun.javadoc.ProgramElementDoc;
+import com.sun.javadoc.Type;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.tldgen.annotations.BodyContent;
+import org.tldgen.annotations.ExcludeProperties;
+import org.tldgen.annotations.VariableScope;
+import org.tldgen.util.JavadocUtils;
 
+import javax.servlet.jsp.tagext.TagExtraInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,23 +29,13 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.servlet.jsp.tagext.TagExtraInfo;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.tldgen.annotations.BodyContent;
-import org.tldgen.annotations.ExcludeProperties;
-import org.tldgen.annotations.VariableScope;
-import org.tldgen.util.JavadocUtils;
-
-import com.sun.javadoc.AnnotationDesc;
-import com.sun.javadoc.ClassDoc;
-import com.sun.javadoc.Doc;
-import com.sun.javadoc.FieldDoc;
-import com.sun.javadoc.MemberDoc;
-import com.sun.javadoc.MethodDoc;
-import com.sun.javadoc.ProgramElementDoc;
+import static org.tldgen.util.JavadocUtils.getAnnotation;
+import static org.tldgen.util.JavadocUtils.getAnnotationArrayAttribute;
+import static org.tldgen.util.JavadocUtils.getBooleanAttribute;
+import static org.tldgen.util.JavadocUtils.getClassAttribute;
+import static org.tldgen.util.JavadocUtils.getEnumAttribute;
+import static org.tldgen.util.JavadocUtils.getStringArrayAttribute;
+import static org.tldgen.util.JavadocUtils.getStringAttribute;
 
 /**
  * Information of a tag class
@@ -145,7 +145,7 @@ public class Tag extends AbstractTldContainerElement {
 	/**
 	 * Parse a Variable annotation. If bound to an attribute, use the nameFromAttribute
 	 * @param attributeName if bound to an attribute, the attribute name. Otherwise, null
-	 * @param the Variable annotation
+	 * @param annotation the Variable annotation
 	 */
 	private Variable addVariable(String attributeName, AnnotationDesc annotation) {
 		Variable variable = new Variable();
@@ -197,7 +197,31 @@ public class Tag extends AbstractTldContainerElement {
 		attribute.setRequired(required != null? required : false);
 		Boolean rtexprvalue = getBooleanAttribute(annotation, "rtexprvalue");
 		attribute.setRtexprvalue((rtexprvalue != null)? rtexprvalue : true);
+		attribute.setType(parseAttributeType(doc));
 		return attribute;
+	}
+
+	/**
+	 * Parse the type from the field or method. Defaults to java.lang.String
+	 * @param doc the javadoc to parse
+	 * @return The qualified type of the attribute.
+	 */
+	private static String parseAttributeType(MemberDoc doc) {
+		Type type = null;
+		if(doc instanceof FieldDoc) {
+			FieldDoc fieldDoc = (FieldDoc) doc;
+			type = fieldDoc.type();
+		}
+		if(doc instanceof MethodDoc) {
+			MethodDoc methodDoc = (MethodDoc) doc;
+			Parameter[] parameter = methodDoc.parameters();
+			if(parameter.length == 1)
+				type = parameter[0].type();
+		}
+		if(type == null || type.isPrimitive())
+			return "java.lang.String";
+		else
+			return type.qualifiedTypeName();
 	}
 	
 	@Override

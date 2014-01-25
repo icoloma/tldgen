@@ -44,6 +44,7 @@ public class MockLibraryFactory {
 		attribute.setDeprecated(true);
 		attribute.setRequired(true);
 		attribute.setRtexprvalue(false);
+		attribute.setType("java.lang.Boolean");
 		tag.addAttribute(attribute);
 		
 		Variable var = new Variable();

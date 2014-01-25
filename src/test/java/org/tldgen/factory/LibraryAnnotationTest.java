@@ -40,6 +40,8 @@ public class LibraryAnnotationTest {
 		assertEquals("http://acme.com/foobar", library.getLibrarySignature().getUri());
 		assertEquals(TldVersion.VERSION_21, library.getLibrarySignature().getVersion());
 		assertEquals(1, library.getTags().size());
+        assertEquals("java.lang.String", library.getTag("lib").getAttribute("fooInt").getType());
+        assertEquals("java.lang.Boolean", library.getTag("lib").getAttribute("aBoolean").getType());
 	}
 	
 }
