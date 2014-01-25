@@ -44,5 +44,4 @@ public class DummyTag {
 	public void setXXX() {
 		
 	}
-
 }
