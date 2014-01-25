@@ -59,4 +59,7 @@
         <function-signature>java.lang.String function0(int param1)</function-signature>
         <example>function1 example</example>
     </function>
+    <listener>
+        <listener-class>org.tldgen.listeners.DummyListener</listener-class>
+    </listener>
 </taglib>

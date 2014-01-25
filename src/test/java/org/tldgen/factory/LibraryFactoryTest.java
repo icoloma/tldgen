@@ -1,11 +1,6 @@
 package org.tldgen.factory;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
+import com.sun.tools.javadoc.Main;
 import org.junit.Before;
 import org.junit.Test;
 import org.tldgen.TldDoclet;
@@ -14,10 +9,15 @@ import org.tldgen.model.Attribute;
 import org.tldgen.model.Function;
 import org.tldgen.model.FunctionParameter;
 import org.tldgen.model.Library;
+import org.tldgen.model.Listener;
 import org.tldgen.model.Tag;
 import org.tldgen.tags.DummyTei;
 
-import com.sun.tools.javadoc.Main;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test the Parser class by launching javadoc and retrieving the parse results
@@ -128,7 +128,18 @@ public class LibraryFactoryTest {
 		assertNull(library.getFunction("hidden"));
 		
 	}
-	
+
+    @Test
+    public void testListeners() {
+
+        Listener dummy = library.getListener("org.tldgen.tags.DummyListener");
+        assertNotNull(dummy);
+        assertNotNull(dummy.getListenerClass());
+        assertEquals("org.tldgen.tags.DummyListener", dummy.getListenerClass());
+
+        assertEquals(1, library.getListeners().size());
+
+    }
 	private Attribute getAttribute(Tag tag, String name) {
 		for (Attribute attribute : tag.getAttributes()) {
 			if (attribute.getName().equals(name)) {

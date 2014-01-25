@@ -1,12 +1,13 @@
 package org.tldgen.writers;
 
-import java.io.IOException;
-import java.io.StringWriter;
-
 import org.tldgen.model.AbstractTldElement;
 import org.tldgen.model.Function;
 import org.tldgen.model.Library;
+import org.tldgen.model.Listener;
 import org.tldgen.model.Tag;
+
+import java.io.IOException;
+import java.io.StringWriter;
 
 /**
  * Create a single HTML file
@@ -88,6 +89,9 @@ public abstract class AbstractHtmlWriter extends AbstractWriter {
 		if (!library.getFunctions().isEmpty()) {
 			printMenuItem("functions.html", "functions", selectedItem instanceof Function);
 		}
+    if (!library.getListeners().isEmpty()) {
+      printMenuItem("listeners.html", "listeners", selectedItem instanceof Listener);
+    }
 		endTag("ol");
 		endTag("div");
 		endTag("div");
