@@ -85,7 +85,7 @@ public class HtmlTagWriter extends AbstractHtmlWriter {
 		printHeader(2, "Attributes");
 		startTag("table", "class", "tag-attributes");
 		startTag("thead");
-		printTableHeaders("Name", "Description", "Flags");
+		printTableHeaders("Name", "Description", "Type","Flags");
 		endTag("thead");
 		
 		startTag("tbody");
@@ -97,7 +97,8 @@ public class HtmlTagWriter extends AbstractHtmlWriter {
 			span.append(">").append(attribute.getName()).append("</span>");
 			printTableRow(
 					span.toString(), 
-					attribute.getHtmlDescription(), 
+					attribute.getHtmlDescription(),
+        attribute.getType(),
 					"<div class=\"flags\">" +
 					createAttributeIcon("required", attribute.isRequired()) + 
 					createAttributeIcon("rtexprvalue", attribute.isRtexprvalue()) +

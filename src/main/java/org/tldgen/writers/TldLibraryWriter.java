@@ -194,6 +194,7 @@ public class TldLibraryWriter extends AbstractWriter {
 			writeElement("name", attr.getName());
 			writeElement("required", attr.isRequired()? attr.isRequired() : null);
 			writeElement("rtexprvalue", attr.isRtexprvalue()? attr.isRtexprvalue() : null);
+			writeElement("type", attr.getType());
 
 			endElement();
 		}
