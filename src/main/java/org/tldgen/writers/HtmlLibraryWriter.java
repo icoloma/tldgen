@@ -1,18 +1,18 @@
 package org.tldgen.writers;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
-
 import org.apache.commons.io.IOUtils;
 import org.tldgen.DocletOptions;
 import org.tldgen.model.Library;
 import org.tldgen.model.Tag;
 import org.tldgen.util.ClasspathFileUtils;
 import org.tldgen.util.DirectoryUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
 
 /**
  * Create HTML Documentation
@@ -53,6 +53,13 @@ public class HtmlLibraryWriter {
 			functionWriter.write(library);
 			functionWriter.close();		
 		}
+
+    if (!library.getListeners().isEmpty()) {
+      HtmlListenerWriter listenerWriter = new HtmlListenerWriter(htmlFolder + "/listeners.html");
+      listenerWriter.setFormatOutput(formatOutput);
+      listenerWriter.write(library);
+      listenerWriter.close();
+    }
 	}
 
 	/**
