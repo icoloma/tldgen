@@ -61,14 +61,28 @@ public class Tag extends AbstractTldContainerElement {
 	
 	/** An optional {@link TagExtraInfo} */
 	private String teiClass;
-	
+
+	/** primitive wrapper types used in tld tag attribute types. Void.class excluded */
+	private static final Map<String,String> PRIMITIVES = new HashMap<String, String>();
+
+	static {
+		PRIMITIVES.put(boolean.class.getSimpleName(), Boolean.class.getName());
+		PRIMITIVES.put(byte.class.getSimpleName(), Byte.class.getName());
+		PRIMITIVES.put(char.class.getSimpleName(), Character.class.getName());
+		PRIMITIVES.put(short.class.getSimpleName(), Short.class.getName());
+		PRIMITIVES.put(int.class.getSimpleName(), Integer.class.getName());
+		PRIMITIVES.put(long.class.getSimpleName(), Long.class.getName());
+		PRIMITIVES.put(float.class.getSimpleName(), Float.class.getName());
+		PRIMITIVES.put(double.class.getSimpleName(), Double.class.getName());
+	}
+
 	private static Logger log = LoggerFactory.getLogger(Tag.class);
 	
 	public static Tag createInstance(ClassDoc doc) {
     	Tag tag = new Tag();
     	AnnotationDesc ann = getAnnotation(doc, ExcludeProperties.class);
     	Set<String> excludeProperties = ann == null? new HashSet<String>() : new TreeSet<String>(Arrays.asList(getStringArrayAttribute(ann, "value")));
-		recollectTagData(doc, tag, excludeProperties);
+			recollectTagData(doc, tag, excludeProperties);
     	return tag;
 	}
 	
@@ -218,12 +232,15 @@ public class Tag extends AbstractTldContainerElement {
 			if(parameter.length == 1)
 				type = parameter[0].type();
 		}
-		if(type == null || type.isPrimitive())
-			return "java.lang.String";
-		else
+    if(type == null) {
+      return null;
+    } else if(type.isPrimitive()) {
+			return PRIMITIVES.get(type.qualifiedTypeName());
+    } else {
 			return type.qualifiedTypeName();
+    }
 	}
-	
+
 	@Override
 	protected String calculateDefaultElementName(Doc doc) {
 		// calculate default tag name

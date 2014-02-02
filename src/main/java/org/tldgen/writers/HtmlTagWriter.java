@@ -1,13 +1,13 @@
 package org.tldgen.writers;
 
-import java.io.IOException;
-import java.util.Collection;
-
 import org.tldgen.annotations.VariableScope;
 import org.tldgen.model.Attribute;
 import org.tldgen.model.Library;
 import org.tldgen.model.Tag;
 import org.tldgen.model.Variable;
+
+import java.io.IOException;
+import java.util.Collection;
 
 public class HtmlTagWriter extends AbstractHtmlWriter {
 	
@@ -98,7 +98,7 @@ public class HtmlTagWriter extends AbstractHtmlWriter {
 			printTableRow(
 					span.toString(), 
 					attribute.getHtmlDescription(),
-        attribute.getType(),
+					attribute.hasType() ? attribute.getType() : "",
 					"<div class=\"flags\">" +
 					createAttributeIcon("required", attribute.isRequired()) + 
 					createAttributeIcon("rtexprvalue", attribute.isRtexprvalue()) +

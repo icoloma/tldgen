@@ -17,7 +17,7 @@ public class Attribute extends AbstractTldElement {
 	private Boolean rtexprvalue;
 
 	/** the runtime type of the attribute value (optional) */
-	private String type = "java.lang.String";
+	private String type = String.class.getName();
 	
 	/**
 	 * Sort starting with the required attributes 
@@ -71,4 +71,8 @@ public class Attribute extends AbstractTldElement {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+  public boolean hasType() {
+    return this.type != null;
+  }
 }

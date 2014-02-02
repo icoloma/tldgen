@@ -1,15 +1,5 @@
 package org.tldgen.writers;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Collection;
-import java.util.Set;
-
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +13,15 @@ import org.tldgen.model.LibrarySignature;
 import org.tldgen.model.Tag;
 import org.tldgen.model.Variable;
 import org.tldgen.util.DirectoryUtils;
+
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * Create TLD documentation
@@ -194,7 +193,9 @@ public class TldLibraryWriter extends AbstractWriter {
 			writeElement("name", attr.getName());
 			writeElement("required", attr.isRequired()? attr.isRequired() : null);
 			writeElement("rtexprvalue", attr.isRtexprvalue()? attr.isRtexprvalue() : null);
-			writeElement("type", attr.getType());
+			if(attr.hasType()) {
+				writeElement("type", attr.getType());
+			}
 
 			endElement();
 		}
