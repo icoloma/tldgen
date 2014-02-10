@@ -27,6 +27,7 @@
         <attribute>
             <name>foo</name>
             <required>true</required>
+            <type>java.lang.Boolean</type>
         </attribute>
         <variable>
             <name-given>foo</name-given>
@@ -41,6 +42,7 @@
         <body-content>scriptless</body-content>
         <attribute>
             <name>foo</name>
+            <type>java.lang.String</type>
         </attribute>
         <example>tag2 example</example>
     </tag>

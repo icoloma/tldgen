@@ -15,6 +15,9 @@ public class Attribute extends AbstractTldElement {
 	
 	/** true if the attribute will accept EL expressions (optional) */
 	private Boolean rtexprvalue;
+
+	/** the runtime type of the attribute value (optional) */
+	private String type = String.class.getName();
 	
 	/**
 	 * Sort starting with the required attributes 
@@ -60,5 +63,16 @@ public class Attribute extends AbstractTldElement {
 	public void setRtexprvalue(Boolean rtexprvalue) {
 		this.rtexprvalue = rtexprvalue;
 	}
-	
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+  public boolean hasType() {
+    return this.type != null;
+  }
 }
