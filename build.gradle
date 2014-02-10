@@ -15,10 +15,11 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'signing'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply from: 'https://raw.github.com/icoloma/gradle-plugins/master/providedCompile.gradle'
 apply from: 'https://raw.github.com/icoloma/gradle-plugins/master/artifacts.gradle'
 
-project.version='1.4-SNAPSHOT'
+project.version='1.4'
 project.group='org.extrema-sistemas'
 
 repositories {
@@ -26,9 +27,6 @@ repositories {
 }
 
 repositories {
-    if (project.hasProperty('nexus')) {
-        mavenRepo name: 'nexus', url: nexus
-    }
     mavenCentral()
 }
 
@@ -83,6 +81,7 @@ uploadArchives {
                developer {
                    id 'icoloma'
                    name 'Nacho Coloma'
+                   email 'icoloma@gmail.com'
                }
                developer {
                    id 'ccoloma'
@@ -93,6 +92,10 @@ uploadArchives {
                    id 'beradrian'
                    name 'Adrian Ber'
                    email 'beradrian@gmail.com'
+               }
+               developer {
+                   id 'nathamcomstock'
+                   name 'Natham Comstock'
                }
 
            }

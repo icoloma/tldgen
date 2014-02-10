@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.extrema-sistemas</groupId>
   <artifactId>tldgen</artifactId>
-  <version>1.4.4-SNAPSHOT</version>
+  <version>1.4.4</version>
   <name>TLDGen</name>
   <description>TLD Generator from Java annotations</description>
   <url>http://code.google.com/p/tldgen/</url>
@@ -38,11 +38,15 @@
   		<organization>Extrema Sistemas</organization>
   		<email>ccescribano@gmail.com</email>
   	</developer>
-  	<developer>
-  		<id>beradrian</id>
-  		<name>Adrian Ber</name>
-  		<email>beradrian@gmail.com</email>
-  	</developer>
+    <developer>
+      <id>beradrian</id>
+      <name>Adrian Ber</name>
+      <email>beradrian@gmail.com</email>
+    </developer>
+    <developer>
+      <id>nathamcomstock</id>
+      <name>Natham Comstock</name>
+    </developer>
   </developers>
   <licenses>
     <license>
