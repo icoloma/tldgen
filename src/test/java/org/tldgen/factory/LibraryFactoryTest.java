@@ -33,7 +33,7 @@ public class LibraryFactoryTest {
 	@Before
 	public void setup() {
 		int result = Main.execute(new String[] {
-				"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.tldgen.tags", "-tldFile", OUTPUT_FOLDER + "LibraryFactoryTest-output/tldgen-test.tld",
+				"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.tldgen.tags", "-tldFolder", OUTPUT_FOLDER + "LibraryFactoryTest-output",
 				"-displayName", "Loom Core Tag Library", "-name", "loom", "-uri", "http://loom.extrema-sistemas.org/loom-core.tld", "-htmlFolder", OUTPUT_FOLDER + "LibraryFactoryTest-output", 
 				"-indentSpaces", "4", "-license", "APACHE", "-version", "2.1"
 		});
