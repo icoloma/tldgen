@@ -25,7 +25,7 @@ public class LibraryAnnotationTest {
 	public void setup() {
 		TldDoclet.reset();
 		int result = Main.execute(new String[] {
-				"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.tldgen.libtags", "-tldFile", OUTPUT_FOLDER + "LibraryAnnotationTest-output/tldgen-test.tld",
+				"-private", "-doclet", TldDoclet.class.getName(), "-sourcepath", "src/test/java", "org.tldgen.libtags", "-tldFolder", OUTPUT_FOLDER + "LibraryAnnotationTest-output",
 				"-htmlFolder", OUTPUT_FOLDER + "LibraryAnnotationTest-output"
 		});
 		assertEquals("The javadoc command did not exit successfully. Check the system log for details", 0, result);
