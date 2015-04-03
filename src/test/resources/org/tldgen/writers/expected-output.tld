@@ -24,14 +24,14 @@
         <name>dummy</name>
         <tag-class>org.tldgen.sample.DummyTag</tag-class>
         <body-content>empty</body-content>
+        <variable>
+            <name-given>foo</name-given>
+        </variable>
         <attribute>
             <name>foo</name>
             <required>true</required>
             <type>java.lang.Boolean</type>
         </attribute>
-        <variable>
-            <name-given>foo</name-given>
-        </variable>
         <example>dummy example</example>
     </tag>
     <tag>
