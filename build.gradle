@@ -19,7 +19,7 @@ apply plugin: 'idea'
 apply from: 'https://raw.github.com/icoloma/gradle-plugins/master/providedCompile.gradle'
 apply from: 'https://raw.github.com/icoloma/gradle-plugins/master/artifacts.gradle'
 
-project.version='1.5'
+project.version='1.6-SNAPSHOT'
 project.group='org.extrema-sistemas'
 
 repositories {
