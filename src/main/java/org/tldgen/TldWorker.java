@@ -21,14 +21,14 @@ public class TldWorker {
 		this.options = options;
 	}
 
-        public Library processLibrary(ClassDoc[] classes, LibrarySignature librarySignature, String tldFolder, String htmlFolder,
-                        Boolean mightInherit) {
+	public Library processLibrary(ClassDoc[] classes, LibrarySignature librarySignature, String tldFolder, String htmlFolder,
+			Boolean mightInherit) {
 		Library library = libraryFactory.parse(classes, librarySignature);
 
-                if (mightInherit && !options.getInheritTLD().equals("")) {
-                        TldInherit inherit = new TldInherit(options.getInheritTLD());
-                        inherit.inherit(library);
-                }
+		if (mightInherit && !options.getInheritTLD().equals("")) {
+			TldInherit inherit = new TldInherit(options.getInheritTLD());
+			inherit.inherit(library);
+		}
 
 		createTLD(library, tldFolder);
 		createHtmlDoc(library, htmlFolder);
@@ -43,17 +43,18 @@ public class TldWorker {
 		try {
 			tldLibraryWriter.setOptions(options);
 			tldLibraryWriter.writeTLD(library, tldFolder);
-		} catch (XMLStreamException e) {
+		}
+		catch (XMLStreamException e) {
 			throw new RuntimeException(e);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
 
-	
 	/**
 	 * Create the HTML files with the documentation of this TLD library
+	 *
 	 * @param htmlFolder the folder where the documentation files should be written. If it does not exist, it will be created
 	 */
 	public void createHtmlDoc(Library library, String htmlFolder) {
@@ -61,30 +62,31 @@ public class TldWorker {
 			HtmlLibraryWriter htmlLibraryWriter = new HtmlLibraryWriter();
 			htmlLibraryWriter.setOptions(options);
 			htmlLibraryWriter.writeHtml(library, htmlFolder);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	/**
 	 * Create a TLD file with the contents of the TLD library
 	 * @param tldFoldername the location of the TLD file to create
 	 * /
-	
+
 	private static final String TLD_SUFFIX = ".tld";
 	public void createTLDs(Library[] libraries, String tldFoldername) {
-		for (Library library : libraries) {
-			// get the TLD name
-			String tldFileName = library.getFileName();
-			// if not specified, defaults to short name
-			if (!tldFileName.endsWith(TLD_SUFFIX)) {
-				tldFileName += TLD_SUFFIX;
-			}
-			// get the full path to the file
-			tldFileName = new File(tldFoldername, tldFileName).getPath();
-			createTLD(library, tldFileName);
-		}		
+	for (Library library : libraries) {
+	// get the TLD name
+	String tldFileName = library.getFileName();
+	// if not specified, defaults to short name
+	if (!tldFileName.endsWith(TLD_SUFFIX)) {
+	tldFileName += TLD_SUFFIX;
 	}
-	
-*/
+	// get the full path to the file
+	tldFileName = new File(tldFoldername, tldFileName).getPath();
+	createTLD(library, tldFileName);
+	}
+	}
+
+	 */
 }

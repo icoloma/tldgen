@@ -23,9 +23,7 @@ import org.w3c.dom.NodeList;
 import com.sun.tools.javadoc.ClassDocImpl;
 
 /**
- * (c) Swissquote 17.05.16
- *
- * @author sgoetz
+ * @author onigoetz
  */
 public class TldInherit {
 
