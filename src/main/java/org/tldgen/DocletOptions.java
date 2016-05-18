@@ -15,6 +15,8 @@ public class DocletOptions {
 	
 	private boolean doNotOverwrite = false;
 
+        private String inheritTLD = "";
+
 	public DocletOptions withIndentSpaces(String indentSpaces) {
 		this.indentSpaces = indentSpaces;
 		return this;
@@ -40,6 +42,11 @@ public class DocletOptions {
 		return this;
 	}
 
+        public DocletOptions withInherit(String path) {
+                this.inheritTLD = path;
+                return this;
+        }
+
 	public String getIndentSpaces() {
 		return indentSpaces;
 	}
@@ -60,4 +67,7 @@ public class DocletOptions {
 		return doNotOverwrite;
 	}
 	
+        public String getInheritTLD() {
+                return inheritTLD;
+        }
 }

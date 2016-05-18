@@ -58,6 +58,9 @@ public class TldDoclet {
 	/** TLD File license */
 	private static String license;
 	
+        /** Inherited TLD file */
+        private static String inheritTLD;
+
 	/** true to format output, false otherwise. Default true */
 	private static String formatOutput;
 
@@ -78,7 +81,7 @@ public class TldDoclet {
 		options.add("tldFolder");
 		options.add("uri");
 		options.add("version");
-		
+                options.add("inheritTLD");
 	}
 	
 	/**
@@ -94,20 +97,20 @@ public class TldDoclet {
 			DocletOptions options = parseOptions(root.options());
 			TldWorker worker = new TldWorker(options);
 			if (name != null && uri != null) {
-				library = worker.processLibrary(root.classes(), createLibrarySignatureFromCommandLine(), tldFolder, htmlFolder);
+                                library = worker.processLibrary(root.classes(), createLibrarySignatureFromCommandLine(), tldFolder, htmlFolder, true);
 				result = true;
 			} else {
 				for (PackageDoc tagsPackage : root.specifiedPackages()) {
 					AnnotationDesc libraryAnnotation = JavadocUtils.getAnnotation(tagsPackage, org.tldgen.annotations.Library.class);
 					if (libraryAnnotation != null) {
-						library = worker.processLibrary(tagsPackage.allClasses(), createLibrarySignatureFromAnnotation(libraryAnnotation), tldFolder, htmlFolder);
-						
+                                                library = worker.processLibrary(tagsPackage.allClasses(), createLibrarySignatureFromAnnotation(libraryAnnotation), tldFolder, htmlFolder, false);
+
 						// if uri is not specified then use the reverse package name
 						if (library.getLibrarySignature().getUri() == null) {
 							library.getLibrarySignature().setUri("http://"
 									+ new String(ArrayUtilities.reverseTokens(tagsPackage.name().toCharArray(), '.')));
 						}
-						
+
 						result = true;
 					}
 				}
@@ -189,6 +192,7 @@ public class TldDoclet {
 		out.println("        -htmlFolder {HTML documentation directory}");
 		out.println("        -indentSpaces {number of indent spaces}");
 		out.println("        -license {APACHE | GPL | LGPL | MIT | MOZILLA | CC | NONE | [file location]}");
+                out.println("        -inheritTLD {path to a TLD in dependencies}");
 		out.println("        -name {name}");
 		out.println("        -tldFolder {TLD folder name}");  
 		out.println("        -uri {uri name}");
@@ -204,6 +208,7 @@ public class TldDoclet {
 					"   where HTML documentation will be stored");
 		out.println("  -indentSpaces (optional, default 4): spaces used for indenting XML content.");
 		out.println("  -license (optional, default NONE): The license to include.");
+                out.println("  -inheritTLD (optional): A taglib to inherit components from.");
 		out.println("  -tldFolder (optional, default src/main/resources/META-INF/): \n" +
 					"   the folder where the TLD file will be stored.");
 		out.println("  -version (optional, default 2.0): The TLD version to use.");
@@ -240,6 +245,9 @@ public class TldDoclet {
 			if (version != null) {
 				options.withVersion(convertVersion()) ;
 			}
+                        if (inheritTLD != null) {
+                                options.withInherit(inheritTLD);
+                        }
 			return options;
 		} catch (NoSuchFieldException e) {
 			throw new RuntimeException(e);

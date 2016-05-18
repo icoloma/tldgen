@@ -13,22 +13,28 @@ import org.tldgen.writers.TldLibraryWriter;
 import com.sun.javadoc.ClassDoc;
 
 public class TldWorker {
-
 	private LibraryFactory libraryFactory = new LibraryFactory();
-	
+
 	private DocletOptions options;
-	
+
 	public TldWorker(DocletOptions options) {
 		this.options = options;
 	}
 
-	public Library processLibrary(ClassDoc[] classes, LibrarySignature librarySignature, String tldFolder, String htmlFolder) {
+        public Library processLibrary(ClassDoc[] classes, LibrarySignature librarySignature, String tldFolder, String htmlFolder,
+                        Boolean mightInherit) {
 		Library library = libraryFactory.parse(classes, librarySignature);
+
+                if (mightInherit && !options.getInheritTLD().equals("")) {
+                        TldInherit inherit = new TldInherit(options.getInheritTLD());
+                        inherit.inherit(library);
+                }
+
 		createTLD(library, tldFolder);
 		createHtmlDoc(library, htmlFolder);
 		return library;
 	}
-	
+
 	/**
 	 * Create a TLD file with the contents of the TLD library
 	 */
